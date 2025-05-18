@@ -1,0 +1,66 @@
+POST http://localhost:4000/register
+Content-Type : application/json
+
+{
+    "name" : "Pragyan",
+    "password" : "berserK@01",
+    "confirmPassword" : "berserK@01",
+    "email": "pragyan@gmail.com"
+}
+
+###
+
+POST http://localhost:4000/login
+Content-Type : application/json
+
+{
+    "email": "pragyan@gmail.com",
+    "password" : "berserK@01"
+}   
+
+###
+
+
+GET http://localhost:4000/verify
+Content-Type : application/json
+Set-Cookie: jwt=j%3A%7B%22refreshToken%22%3A%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiZTNiNzIwNGQtOTJlYS00MWI2LWExOWItMTU4OWFkMWM1MjQzIiwidXNlcl9uYW1lIjoiUHJhZ3lhbiIsImVtYWlsIjoicHJhZ3lhbkBnbWFpbC5jb20iLCJleHAiOjE3NDcyOTgxNTYsImlhdCI6MTc0NzI5ODA5Nn0.RQuMGf5ZIDNVcpc0_9WYqPdeJKNtAtE2Du5_IJBPjos%22%2C%22accessToken%22%3A%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiZTNiNzIwNGQtOTJlYS00MWI2LWExOWItMTU4OWFkMWM1MjQzIiwidXNlcl9uYW1lIjoiUHJhZ3lhbiIsImVtYWlsIjoicHJhZ3lhbkBnbWFpbC5jb20iLCJleHAiOjE3NDcyOTgxMjYsImlhdCI6MTc0NzI5ODA5Nn0.iN-unyzZDiq-b4RUNR4tAhsqPvwG5VgBAUxE04ZjUmg%22%7D; Path=/; Expires=Thu, 15 May 2025 09:34:56 GMT; HttpOnly
+
+###
+
+GET  http://localhost:4000/showManageProfile
+Content-Type : application/json
+
+{
+    "email": "pragyan@gmail.com"
+}   
+
+###
+
+POST  http://localhost:4000/showManageProfile/add
+Content-Type : application/json
+
+{
+    "email": "pragyan@gmail.com",
+    "name" : "Pragyan",
+    "avatar_url": "a_url",
+    "is_kid": false
+}   
+
+###
+PUT  http://localhost:4000/showManageProfile/update
+Content-Type : application/json
+
+{
+    "profile_id" : "92223569-ef27-4ceb-a1f8-5115e051fe43",
+    "name" : "rohan",
+    "avatar_url": "r_url"
+}   
+
+
+###
+DELETE  http://localhost:4000/showManageProfile/delete
+Content-Type : application/json
+
+{
+    "profile_id" : "92223569-ef27-4ceb-a1f8-5115e051fe43"
+}   

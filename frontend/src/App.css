@@ -1,0 +1,243 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0%;
+  padding: 0%;
+  overflow: hidden;
+
+}
+
+#nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10vh;
+  width: 85vw;
+  margin: 0 auto;
+  /* From https://css.glass */
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(0.5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+#nav>* {
+  flex-basis: 220px;
+  text-align: center;
+
+}
+
+#nav-right {
+  display: flex;
+}
+
+#nav-right>* {
+  flex-basis: 70px;
+  text-align: center;
+}
+
+#sign-button {
+  background-color: rgb(229, 9, 20);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 10px;
+  text-align: center;
+  font-size: 15px;
+}
+
+#logo img {
+  height: 12vh;
+  text-align: center;
+}
+
+#nav-firstpage {
+  height: 100vh;
+  background: url("../public/netfixBackground");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+
+}
+
+#first-page {
+  height: 90vh;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(0.5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
+#first-page h1 {
+  color: white;
+  margin: 0 auto;
+  font-size: 50px;
+  text-align: center;
+}
+
+#first-page h3 {
+  color: white;
+}
+
+#first-page button {
+  background-color: rgb(229, 9, 20);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 30px;
+  margin: 10px auto;
+  padding: 12px 50px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  display: flex;
+  justify-content: space-between;
+  font-size: x-large;
+  gap: 20px
+}
+
+
+#first-page #input-button {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-wrap: wrap;
+
+}
+
+
+#first-page input {
+  background-color: transparent;
+  color: white;
+  width: 30vw;
+  border-radius: 4px;
+  height: 5vh;
+  font-weight: 100;
+  flex: 1 1 auto;
+  border: none
+}
+
+#first-page input:valid {
+  border: 3px solid green;
+  /* background-color: #e6ffed; */
+}
+
+#first-page input:invalid {
+  border: 3px solid red;
+  /* background-color: #ffe6e6; */
+}
+
+#first-page input::placeholder {
+  color: white;
+}
+
+#second-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#second-page #container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 75vh;
+  width: 25vw;
+  gap: 10px;
+  background: rgba(3, 3, 3, 0.78);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  border: 1px solid rgba(3, 3, 3, 0.3);
+}
+
+#second-page input {
+  background-color: transparent;
+  color: white;
+  width: 99%;
+  border-radius: 4px;
+  height: 5vh;
+  font-weight: 100;
+  border-color: rgba(255, 255, 255, 0.7);
+  padding: 0;
+  margin: 0;
+
+}
+
+#second-page button {
+  font-size: large;
+  /* Initial width of 50px */
+  width: fit-content;
+  width: 100%;
+  /* Make the button width fit its content */
+  color: white;
+  background-color: rgb(229, 9, 20);
+  border: none;
+  border-radius: 3px;
+  white-space: nowrap;
+  padding: 10px 0;
+
+}
+
+#second-page h1,
+h3 {
+  text-align: left;
+  color: white
+}
+
+#second-page #container #inside-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  height: 70vh;
+  width: 20vw;
+  gap: 10px;
+
+}
+
+#second-page a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+#second-page h3 {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-weight: 200;
+}
+
+#second-page input:valid {
+  border: 3px solid green;
+  /* background-color: #e6ffed; */
+}
+
+#second-page input:invalid {
+  border: 3px solid red;
+  /* background-color: #ffe6e6; */
+}
+
+#second-page input::placeholder {
+  color: white;
+}
+
+span {
+  position:absolute;
+  right:70px
+}
+
+
+#second-page .input-eye {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: 'relative';
+  width: 100%;
+}
