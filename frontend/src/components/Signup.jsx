@@ -1,13 +1,16 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useContext } from "react";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/VisibilityOff";
+import { AuthContext } from "./AuthContext";
 
 function Signup() {
     const [toggle, setToggle] = useState(true);
+    const { registerInfo, updateRegisterInfo ,sendLoginInfo} = useContext(AuthContext);
 
     const toggleEye = useCallback(() => {
         setToggle((prev) => !prev);
     }, []);
+
 
     return (
         <div>
@@ -24,17 +27,12 @@ function Signup() {
                     <div id="container">
                         <div id="inside-container">
                             <h1>Sign Up</h1>
-                            <input type="email" placeholder="Email" />
-                            <input type="email" placeholder="Name" />
+                            <input type="email" placeholder="Email" onChange={(event) => { updateRegisterInfo({ ...registerInfo, email: event.target.value }) }} value={registerInfo.email} />
+                            <input type="text" placeholder="Name" onChange={(event) => { updateRegisterInfo({ ...registerInfo, name: event.target.value }) }} value={registerInfo.name} />
                             <input
-                                type={toggle ? "password" : "text"}
-                                placeholder="Password"
-                            />
-                            <div class="input-eye">
-                                <input
-                                    type={toggle ? "password" : "text"}
-                                    placeholder="Confirm Password"
-                                />
+                                type="text" placeholder="Password" onChange={(event) => { updateRegisterInfo({ ...registerInfo, password: event.target.value }) }} value={registerInfo.password} />
+                            <div className="input-eye">
+                                <input type={toggle ? "password" : "text"} placeholder="Confirm Password" onChange={(event) => { updateRegisterInfo({ ...registerInfo, confirmPassword: event.target.value }) }} value={registerInfo.confirmPassword} />
                                 <span onClick={() => toggleEye()}>
                                     {toggle ? (
                                         <VisibilityIcon color="info" />
@@ -44,7 +42,7 @@ function Signup() {
                                 </span>
                             </div>
 
-                            <button>Sign Up</button>
+                            <button onClick={()=>{sendLoginInfo()}}>Sign Up</button>
                         </div>
                     </div>
                 </div>

@@ -75,8 +75,8 @@ router.post("/login", async (req, res)=>{
             {
                 const refreshToken = jwt.sign({account_id, user_name, email, exp: Math.floor(Date.now()/1000) + (60)}, process.env.REFRESH_TOKEN_SECRET);
                 const accessToken = jwt.sign({account_id, user_name, email , exp: Math.floor(Date.now()/1000) + (30)}, process.env.ACCESS_TOKEN_SECRET);
-                res.cookie("jwt",{refreshToken, accessToken}, {expires: new Date(Date.now() +1000 * 60 * 60), httpOnly:true, secure:false, overwrite: true});
-                res.status(200).json({refreshToken, accessToken})
+                res.cookie("jwt",{account_id, user_name, email,refreshToken, accessToken}, {expires: new Date(Date.now() +1000 * 60 * 60), httpOnly:true, secure:false, overwrite: true});
+                res.status(200).json({account_id, user_name, email});
             }
             else
             {
