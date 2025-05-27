@@ -467,8 +467,8 @@ input[type="checkbox"]:checked {
 }
 
 .navbar {
-  position: fixed;
-  width: 100vw;
+  position: sticky;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   height: 62px;
@@ -485,57 +485,338 @@ input[type="checkbox"]:checked {
   flex-basis: 500px;
   display: flex;
   list-style-type: none;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   font-size: 0.8rem;
   color: white;
 }
 
-.navbar .right{
+.navbar .right {
   flex-basis: 280px;
+  margin-right: 60px;
+  position: relative;
+
 }
 
 .navbar img {
-  width: 110px;
-  height: 70px;
+  width: 100px;
+  height: 60px;
 }
 
 a {
   color: white;
+  /* font-weight: 400; */
   text-decoration: none;
 }
 
-.navbar .right img{
-  width: 50px;
-  height: 50px;
+.navbar .right img {
+  width: 25px;
+  height: 25px;
+  border-radius: 2px;
 }
 
-.navbar .right-img{
+.navbar .right-img {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
- .arrowDrop {
-    transition: transform 0.5s ease;
-  }
+.arrowDrop {
+  transition: transform 0.5s ease;
+}
 
-  .arrowDrop:hover {
-    transform: rotate(180deg);
-  }
+.right-img:hover .arrowDrop {
+  transform: rotate(180deg);
+}
 
-  .navbar .right .left-search{
-    display: flex;
-    align-items: center;
-    position: relative;
-  }
+.navbar .right .left-search {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
 
-  .navbar .right .left-search input{
-    background-color: black;
-    border: 2px solid grey;
-    height: 18px;
-  }
+.navbar .right .left-search input {
+  background-color: black;
+  border: 2px solid grey;
+  height: 18px;
+}
 
-  .search{
-    position: absolute;
-  }
+.search {
+  position: absolute;
+}
+
+.scroll-down {
+  display: flex;
+  position: absolute;
+  top: 30px;
+  right: 23px;
+  width: 200px;
+  height: 300px;
+  flex-direction: column;
+  background-color: transparent;
+  color: white;
+  display: none;
+
+}
+
+.scroll-down-block {
+  display: flex;
+  position: absolute;
+  z-index: 1;
+  /* top: 60px; */
+  right: 0px;
+  width: 200px;
+  height: 300px;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.699);
+  color: white;
+
+  /* background: rgba(0, 0, 0, 0.048); */
+
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid grey;
+
+
+}
+
+.scroll-down .scrolldown-profile a{
+  height: 30px;
+  width: 80%;
+  display: flex;
+  gap: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+
+
+}
+
+.scroll-down .scrolldown-profile:hover {
+  text-decoration: underline;
+}
+
+.scroll-down a {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: start;
+  margin-left: 10px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.scroll-down a:hover {
+  text-decoration-line: underline;
+}
+
+.right-img:hover .scroll-down {
+  display: block;
+}
+
+.scroll-down .drop-up {
+  display: flex;
+  justify-content: end;
+}
+
+
+.browser {
+  background-color: black;
+  position: relative;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100vh;
+  display: flex;
+}
+
+.top-screen {
+  position: absolute;
+  top: 0;
+  height: 500vh;
+  z-index: 0;
+  width: 100%;
+}
+
+.navbar {
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0);
+  position: fixed;
+  width: 99%;
+  margin: auto
+}
+
+.hero-video {
+  width: 100%;
+}
+
+.movies {
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+
+
+.browser-button {
+  position: absolute;
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  z-index: 10;
+  left: 5%;
+  gap: 20px;
+  top: 47%;
+}
+
+.browser-button button {
+  font-size: large;
+  padding: 0 30px;
+  height: 20%;
+  /* color: white; */
+  /* From https://css.glass */
+
+
+}
+
+.play-arrow {
+  color: black;
+  border-radius: 5px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(0.8px);
+  -webkit-backdrop-filter: blur(0.8px);
+  border: none;
+}
+
+.play-arrow:hover {
+  background-color: rgb(226, 226, 226);
+}
+
+.browser-button button {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 6px;
+}
+
+.top-container {
+  position: relative;
+}
+
+.info-out {
+  color: white;
+  background-color: rgba(128, 128, 128, 0.521);
+  border-radius: 5px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(0.8px);
+  -webkit-backdrop-filter: blur(0.8px);
+  border: none;
+}
+
+.info-out:hover {
+  background-color: rgba(0, 0, 0, 0.438);
+}
+
+.browser-button p {
+  font-weight: 900;
+}
+
+
+
+.card-list {
+  top: 10px;
+  overflow: visible;
+  top: 70px;
+  width: 1000%;
+  height: 200px;
+  background-color: rgba(255, 255, 255, 0);
+  display: flex;
+  gap: 10px;
+  z-index: 1;
+  position: relative;
+}
+
+.card-c {
+  width: 270px;
+  height: 100%;
+  transition: transform 0.3s ease, z-index 0.3s ease;
+  /* Reserve space for hover border */
+
+
+}
+
+.card-c:hover {
+  transform: scale(1.5);
+  background: rgba(19, 19, 19, 0.72);
+  border-radius: 5px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2.5px);
+  -webkit-backdrop-filter: blur(2.5px);
+  border: 1px solid rgba(19, 19, 19, 0.3);
+}
+
+.card-wrapper:hover {
+  z-index: 100;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+
+
+}
+
+.card-wrapper {
+  width: 270px;
+  height: 300px;
+}
+
+.card img {
+  width: 270px;
+  height: 150px;
+  border-radius: 5px;
+}
+
+.card-content {
+  margin-top: 10px;
+  width: 270px;
+  height: 150px;
+  background-color: black;
+  display: none;
+}
+
+.card-wrapper:hover .card-content {
+  display: flex;
+}
+
+.card {
+  height: auto;
+}
+
+.right-scroll {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  /* height: 10%; */
+  z-index: 100;
+  /* width: 10px; */
+  height: 16vh;
+}
+
+.left-scroll {
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: center;
+  /* height: 10%; */
+  z-index: 100;
+  width: 10px;
+  height: 16vh;
+}
+
+.card-list{
+  /* left:-187px; */
+  top:0px;
+  position: relative;
+  display: flex;
+  gap: 1vw;
+  transition: transform 0.5s ease-in-out;
+  will-change: transform;
+}
+
+

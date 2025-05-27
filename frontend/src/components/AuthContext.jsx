@@ -13,7 +13,6 @@ const AuthContextProvider = ({ children }) => {
     const [profileInfo, setProfileInfo] = React.useState(null);
     const [user, setUser] = React.useState(null);
     const [selectedUser, setSelectedUser] = React.useState(null);
-
     const updateSelectedUser = React.useCallback((info)=>{
         console.log(profileInfo)
         console.log(info)
