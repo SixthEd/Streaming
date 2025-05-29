@@ -13,10 +13,17 @@ const AuthContextProvider = ({ children }) => {
     const [profileInfo, setProfileInfo] = React.useState(null);
     const [user, setUser] = React.useState(null);
     const [selectedUser, setSelectedUser] = React.useState(null);
+
+    const [selectedMovie, setSelectedMovie] = React.useState(null);
+
+    const [loadingProfiles, setLoadingProfiles] = React.useState(true);
+
+
     const updateSelectedUser = React.useCallback((info)=>{
         console.log(profileInfo)
         console.log(info)
         setSelectedUser(info);
+        localStorage.setItem("selectedUser", JSON.stringify(info)) 
     },[profileInfo])
 
 
@@ -66,14 +73,17 @@ const AuthContextProvider = ({ children }) => {
             setUser(null);
             setSelectedUser(null);
         }
+
     }, [])
 
     const getProfiles = () => {
+        setLoadingProfiles(true)
         axiosInstance.get("/showManageProfile", {
             params: { email: "pragyan@gmail.com" }
         }).then((response) => {
             setProfileInfo(response.data);
             console.log(response.data);
+            setLoadingProfiles(false);
         }).catch((error) => {
             console.log(error);
         });
@@ -90,7 +100,7 @@ const AuthContextProvider = ({ children }) => {
     })
 
     return (
-        <AuthContext.Provider value={{ loginInfo, updateLoginInfo, sendLoginInfo, registerInfo, updateRegisterInfo, user, profileInfo, updateAddProfile, updateExistProfile, setProfileInfo, updateSelectedUser, selectedUser}} >
+        <AuthContext.Provider value={{ loadingProfiles, loginInfo, updateLoginInfo, sendLoginInfo, registerInfo, updateRegisterInfo, user, profileInfo, updateAddProfile, updateExistProfile, setProfileInfo, updateSelectedUser, selectedUser, setSelectedUser , setSelectedMovie, selectedMovie}} >
             {children}
         </AuthContext.Provider>
     );

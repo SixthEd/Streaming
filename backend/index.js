@@ -5,6 +5,12 @@ import pg from "pg";
 import env from "dotenv";
 import cookieParser from "cookie-parser";
 import { windroute } from "./routes/windows.js";
+import {streamroute} from "./routes/video.js";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename)
 
 const port = 4000;
 const app = express();
@@ -39,9 +45,10 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use("/", router);
 app.use("/",windroute);
+app.use("/",streamroute);
 
 app.listen(port,()=>{
 console.log(`Server is running on ${port}`);
 })
 
-export {db, env};
+export {db, env, __dirname};

@@ -495,7 +495,7 @@ input[type="checkbox"]:checked {
   flex-basis: 280px;
   margin-right: 60px;
   position: relative;
-
+  gap: 20px;
 }
 
 .navbar img {
@@ -519,6 +519,7 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 5px;
 }
 
 .arrowDrop {
@@ -536,9 +537,11 @@ a {
 }
 
 .navbar .right .left-search input {
-  background-color: black;
-  border: 2px solid grey;
+  background-color: rgba(0, 0, 0, 0.233);
+  border: 2px solid rgb(179, 176, 176);
   height: 18px;
+  color:white;
+  border-radius: 5px;
 }
 
 .search {
@@ -581,7 +584,7 @@ a {
 
 }
 
-.scroll-down .scrolldown-profile a{
+.scroll-down .scrolldown-profile a {
   height: 30px;
   width: 80%;
   display: flex;
@@ -598,7 +601,7 @@ a {
 
 .scroll-down a {
   display: flex;
-  /* flex-direction: column; */
+  gap: 7px;
   justify-content: start;
   margin-left: 10px;
   margin-top: 10px;
@@ -651,9 +654,14 @@ a {
 .movies {
   color: white;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  /* align-items: center; */
 }
 
+
+.video-browser-button {
+  position: relative;
+}
 
 
 .browser-button {
@@ -664,7 +672,7 @@ a {
   z-index: 10;
   left: 5%;
   gap: 20px;
-  top: 47%;
+  top: 50%;
 }
 
 .browser-button button {
@@ -734,6 +742,10 @@ a {
   position: relative;
 }
 
+.card-list:hover{
+  z-index: 100;
+}
+
 .card-c {
   width: 270px;
   height: 100%;
@@ -777,14 +789,22 @@ a {
   height: 150px;
   background-color: black;
   display: none;
+  margin: 0;
 }
 
 .card-wrapper:hover .card-content {
   display: flex;
+  flex-direction: column;
 }
 
 .card {
   height: auto;
+}
+
+.title {
+  width: 92%;
+  margin: 0 auto;
+
 }
 
 .right-scroll {
@@ -809,9 +829,9 @@ a {
   height: 16vh;
 }
 
-.card-list{
+.card-list {
   /* left:-187px; */
-  top:0px;
+  top: 0px;
   position: relative;
   display: flex;
   gap: 1vw;
@@ -819,4 +839,196 @@ a {
   will-change: transform;
 }
 
+.streaming {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
 
+}
+
+.streaming-back {
+  position: relative;
+}
+
+.streaming-back div {
+  position: absolute;
+  z-index: 12;
+  top: 10px;
+  left: 10px;
+}
+
+.streaming video {
+  width: 100%;
+  height: 90%;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  background-color: black;
+}
+
+.streaming .controllers {
+  width: 100%;
+  /* background-color: black; */
+  position: absolute;
+  z-index: 100;
+  bottom: 0;
+  height: 10%;
+  /* From https://css.glass */
+  background: rgb(25, 25, 25);
+  /* border-radius: 16px; */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}
+
+.controllers .video-progress {
+  width: 100%;
+  display: flex;
+}
+
+.controllers .video-progress input {
+  width: 98%;
+
+}
+
+.controller-buttons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+input[type=range] {
+  accent-color: red;
+}
+
+.controller-play:hover {
+  transition: transform .2s ease-in-out;
+  transform: scale(1.2);
+}
+
+.controller-reverse:hover {
+  transition: transform .2s ease-in-out;
+  transform: scale(1.2);
+}
+
+.controller-forward:hover {
+  transition: transform .2s ease-in-out;
+  transform: scale(1.2);
+}
+
+.controller-volume:hover {
+  transition: transform .2s ease-in-out;
+  transform: scale(1.2);
+}
+
+.volume-full-controller {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.volume-range {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  bottom: 120px;
+  rotate: 270deg;
+  left: -39px;
+  height: 25px;
+  width: 150px;
+  justify-content: center;
+  background-color: rgb(51 44 44);
+  border-radius: 5%;
+  display: none;
+
+}
+
+.volume-full-controller:hover .volume-range {
+  display: flex;
+}
+
+.video-controlls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  font-size: x-large;
+}
+
+
+.controllers {
+  color: white
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #FFF;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.mylist{
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+  overflow-y:scroll ;
+  overflow-x: hidden;
+  position: relative;
+  z-index: 0;
+}
+
+
+.mylist-para{
+  display: flex;
+  align-items: center;
+  height: 25vh;
+  position: relative;
+  /* border:1px solid white; */
+  /* width: 95%; */
+  /* margin:0 auto; */
+  left:50px;
+  /* background-color: rgba(0, 0, 0, 0); */
+  z-index: 9;
+
+}
+.mylist-para p{
+  position: fixed;
+  /* top:90%; */
+  font-size: xx-large;
+  color:white;
+  z-index: 10;
+}
+
+.mylist-card .mylist-cardls{
+  width: 94%;
+  margin:0 auto;
+  display: flex;
+  gap:20px;
+  flex-wrap: wrap;
+  height: 50vh;  
+}
+
+.mylist-card .card-wrapper {
+  height: 170px;
+}
+
+/* .mylist-card .card-wrapper .card-content{
+  
+} */
+
+.video-controlls p{
+  margin-right: 100px;
+}
+
+.mylist-bottom{
+  width: 100%;
+  height: 20vh;
+}
+
+.card p{
+  color:white
+}

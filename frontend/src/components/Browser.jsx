@@ -12,20 +12,29 @@ function Browser() {
 
       <div className="top-screen">
          <div className="top-container">
-            <video
-               className="hero-video"
-               src="https://www.w3schools.com/howto/rain.mp4"
-               autoPlay
-               loop
-               muted
-               playsInline
-            />
-            <div className="browser-button">
-               <button className="play-arrow"><div><PlayArrowIcon sx={{ fontSize: 40 }} /></div><p>Play</p></button>
-               <button className="info-out"><div><InfoOutlineIcon sx={{ fontSize: 40 }} /></div><p>More Info</p></button>
+            <div className="video-browser-button">
+               <video
+                  className="hero-video"
+                  src="https://www.w3schools.com/howto/rain.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+               />
+               <div className="browser-button">
+                  <button className="play-arrow"><div><PlayArrowIcon sx={{ fontSize: 40 }} /></div><p>Play</p></button>
+                  <button className="info-out"><div><InfoOutlineIcon sx={{ fontSize: 40 }} /></div><p>More Info</p></button>
+               </div>
             </div>
             <div className="movies">
                <Movies />
+               <Movies />
+               <Movies />
+               <Movies />
+               <Movies />
+               <Movies />
+               <Movies />
+
             </div>
          </div>
       </div>
