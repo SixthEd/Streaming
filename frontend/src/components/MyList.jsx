@@ -4,11 +4,17 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import { AuthContext } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar.jsx";
+import ExpandCircleDownOutlinedIcon from '@mui/icons-material/ExpandCircleDownOutlined';
+import SideInfo from "./SideInfo.jsx";
 
 
-function MyList() {
+function MyList(props) {
     const { setSelectedMovie, loadingProfiles, profileInfo, setSelectedUser } = useContext(AuthContext);
+    const [toggleSideinfo, setToggleSideInfo] = useState(false);
 
+    const updateToggleSideInfo = useCallback((info) => {
+        setToggleSideInfo((old) => !old)
+    }, [])
 
     const navigate = useNavigate();
 
@@ -18,6 +24,9 @@ function MyList() {
 
     }, [])
 
+
+
+
     useEffect(() => {
         if (localStorage.getItem("selectedUser")) {
             console.log(localStorage.getItem("selectedUser"))
@@ -26,6 +35,7 @@ function MyList() {
     }, [])
 
     return <div className="mylist">
+        {toggleSideinfo && <SideInfo sideInfo={updateToggleSideInfo} />}
         {loadingProfiles ?
             <span className="loader"></span> :
             <div>
@@ -41,12 +51,18 @@ function MyList() {
                         <div className="card-wrapper">
                             <div className="card">
                                 <div className="card-c">
-                                    <img src="neon.jpg" alt="" />
+                                    <video src="" poster="neon.jpg" alt="" > </video>
                                     <div className="card-content" >
-                                        <div>
-                                            <PlayCircleIcon sx={{ fontSize: 45, fill: "white" }} onClick={() => { streaming() }} />
-                                            <AddCircleOutlineOutlinedIcon sx={{ fontSize: 45, fill: "white" }} />
+                                        <div className="card-subContent">
+                                            <div>
+                                                <PlayCircleIcon sx={{ fontSize: 45, fill: "white" }} onClick={() => { streaming() }} />
+                                                <AddCircleOutlineOutlinedIcon sx={{ fontSize: 45, fill: "white" }} />
+                                            </div>
+                                            <div>
+                                                <ExpandCircleDownOutlinedIcon sx={{ fontSize: 45, fill: "white" }} onClick={() => { updateToggleSideInfo() }} />
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>

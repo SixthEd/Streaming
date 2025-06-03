@@ -1,12 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Movies from "./Movies";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
 
+import SideInfo from "./SideInfo";
+import { AuthContext } from "./AuthContext";
+
 function Browser() {
 
+   const {movieList, setSelectedMovie, selectedMovie} =useContext(AuthContext)
+   const [toggleSideinfo, setToggleSideInfo] = useState(false);
+   const [sideSelectedMovie, setSideSelectedMovie] = useState(null);
+
+   const updateToggleSideInfo = useCallback((info) => {
+      console.log(info)
+      setSideSelectedMovie(info)
+      setToggleSideInfo((old) => !old)
+      // if(!toggleSideinfo){
+      //    setSelectedMovie(null)
+      // }
+      // else
+      // {
+      //    setSelectedMovie(info)
+      // }
+
+      
+   }, [])
+
+
    return <div className="browser">
+      {toggleSideinfo && <SideInfo sideInfo={updateToggleSideInfo} movieInfo={sideSelectedMovie}/>}
+
       <Navbar />
 
 
@@ -26,14 +51,16 @@ function Browser() {
                   <button className="info-out"><div><InfoOutlineIcon sx={{ fontSize: 40 }} /></div><p>More Info</p></button>
                </div>
             </div>
-            <div className="movies">
-               <Movies />
-               <Movies />
-               <Movies />
-               <Movies />
-               <Movies />
-               <Movies />
-               <Movies />
+            <div className="movies-informations">
+               <div className="movies">
+                  <Movies sideInfo={updateToggleSideInfo} movies={movieList}/>
+                  <Movies sideInfo={updateToggleSideInfo} />
+                  <Movies sideInfo={updateToggleSideInfo} />
+                  <Movies sideInfo={updateToggleSideInfo} />
+                  <Movies sideInfo={updateToggleSideInfo} />
+                  <Movies sideInfo={updateToggleSideInfo} />
+                  <Movies sideInfo={updateToggleSideInfo} />
+               </div>
 
             </div>
          </div>

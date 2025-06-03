@@ -43,7 +43,7 @@ function Managewindow() {
         <div >
             {isProfile===0 ?
                 <div className="profile-container">
-                    <h1>Manage Profiles:</h1>
+                    <p className="profile-container-p">Manage Profiles:</p>
                     <div className="profiles">
                         {profileInfo && profileInfo.map((profile) => <Profile key={profile.profile_id} profile_id={profile.profile_id} name={profile.name} avatar_url={profile.avatar_url}  selectProfile={updateSelectedProfile}/>)}
                         {addProfile.name?<Profile name={addProfile.name}/>:

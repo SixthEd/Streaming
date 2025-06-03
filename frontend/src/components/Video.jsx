@@ -11,18 +11,42 @@ import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
 import { useNavigate } from "react-router-dom";
 
 
-function Video() {
+function Video(props) {
 
     const videoRef = useRef(null);
     const containerRef = useRef(null);
+    const controllerRef = useRef(null);
 
-    const { selectedMovie } = useContext(AuthContext);
+    const { selectedMovie, setSelectedMovie } = useContext(AuthContext);
     const [isPlaying, setIsPlaying] = useState(false);
     const [progress, setProgress] = useState(0);
     const [volume, setVolume] = useState(1);
     const [isMute, setIsMute] = useState(false);
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [remainingTime, setRemainingTime] = useState(null);
+    const [showControllers, setShowControllers] = useState(false);
+
+    const handleMouseMovement = () => {
+        setShowControllers(true);
+        clearTimeout(controllerRef.current);
+        controllerRef.current = setTimeout(() => {
+            setShowControllers(false);
+        }, 3000)
+    }
+
+    useEffect(() => {
+        const video = videoRef.current;
+        console.log(video)
+        if (!video) return;
+        video.addEventListener("mousemove", handleMouseMovement);
+
+        return () => {
+            video.removeEventListener("mousemove", handleMouseMovement);
+            clearTimeout(controllerRef.current);
+        }
+
+    }, [])
+
 
     const navigate = useNavigate();
 
@@ -41,6 +65,7 @@ function Video() {
     }, []);
 
     const navigateTo = useCallback(() => {
+        setSelectedMovie(null);
         navigate("/browser")
     }, [])
 
@@ -116,7 +141,7 @@ function Video() {
             const duration = video.duration || 1; // avoid division by 0
             const progressPercent = (current / duration) * 100;
             setProgress(progressPercent);
-            setRemainingTime(formatTime(duration-current))
+            setRemainingTime(formatTime(duration - current))
         };
 
         video.addEventListener('timeupdate', updateProgress);
@@ -129,14 +154,24 @@ function Video() {
 
 
     return <div className="streaming" ref={containerRef}>
-        <div className="streaming-back" onClick={() => { navigateTo() }}>
+        <div className={showControllers ? "streaming-back" : ""} onClick={() => { navigateTo() }} >
             <div><ArrowBackSharpIcon sx={{ fontSize: 60, fill: "white" }} /></div>
         </div>
-        <video src="http://localhost:4000/media" ref={videoRef} poster="neon.jpg" controls={false}></video>
-        <div className="controllers">
+
+        {selectedMovie?.videoData?.[1]?.videoUrl && (
+            <video
+                src={selectedMovie.videoData[1].videoUrl}
+                ref={videoRef}
+                poster={selectedMovie.videoData[1].thumbnailUrl}
+                autoPlay
+                controls={false}
+            />
+        )}
+
+        <div className={showControllers ? "controllers" : ""}>
             <div className="video-progress">
                 <input
-                    
+
                     type='range'
                     min='0'
                     max='100'
@@ -146,7 +181,7 @@ function Video() {
                 <div>{remainingTime}</div>
             </div>
             <div className="video-controlls">
-                <div class="controller-buttons">
+                <div className="controller-buttons">
                     <div className="controller-play">
                         <PlayArrowIcon sx={{ fontSize: 60, fill: "white" }} onClick={() => { togglePlayPause() }} />
                     </div>
@@ -163,7 +198,8 @@ function Video() {
                         </div>
                     </div>
                 </div>
-                <div><p>title</p></div>
+                <div>
+                    {selectedMovie?.title && (<p>{selectedMovie.title}</p>)}</div>
                 <div>
                     {!isFullScreen ? <FullscreenIcon sx={{ fontSize: 60, fill: "white" }} onClick={() => { if (containerRef.current.requestFullscreen) { containerRef.current.requestFullscreen(); setIsFullScreen(true) } }} /> : <FullscreenExitIcon sx={{ fontSize: 60, fill: "white" }} onClick={() => { if (document.fullscreenElement) { document.exitFullscreen(); setIsFullScreen(false) } }} />}
                 </div>

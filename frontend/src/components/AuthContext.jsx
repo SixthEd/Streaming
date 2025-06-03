@@ -14,10 +14,11 @@ const AuthContextProvider = ({ children }) => {
     const [user, setUser] = React.useState(null);
     const [selectedUser, setSelectedUser] = React.useState(null);
 
-    const [selectedMovie, setSelectedMovie] = React.useState(null);
+    const [selectedMovie, setSelectedMovie] = React.useState({});
+    
 
     const [loadingProfiles, setLoadingProfiles] = React.useState(true);
-
+    const [movieList, setMovieList] = React.useState(null);
 
     const updateSelectedUser = React.useCallback((info)=>{
         console.log(profileInfo)
@@ -73,12 +74,15 @@ const AuthContextProvider = ({ children }) => {
             setUser(null);
             setSelectedUser(null);
         }
-
+        axiosInstance.get("/movielist").then((response)=>{setMovieList(response.data.titles)}).catch((err)=>{
+            console.log(err)
+        })
     }, [])
 
-    const getProfiles = () => {
+
+    const getProfiles = async() => {
         setLoadingProfiles(true)
-        axiosInstance.get("/showManageProfile", {
+        await axiosInstance.get("/showManageProfile", {
             params: { email: "pragyan@gmail.com" }
         }).then((response) => {
             setProfileInfo(response.data);
@@ -89,18 +93,18 @@ const AuthContextProvider = ({ children }) => {
         });
     }
 
-    const addProfiles = useCallback((info) => {
-        axiosInstance.post("/showManageProfile/add", {
+    const addProfiles = useCallback(async(info) => {
+        await axiosInstance.post("/showManageProfile/add", {
             email: user.email, ...info
         }).then((response) => {
-            console.log(response.data);
+            setMovieList(response.data);
         }).catch((error) => {
             console.log(error);
         });
     })
 
     return (
-        <AuthContext.Provider value={{ loadingProfiles, loginInfo, updateLoginInfo, sendLoginInfo, registerInfo, updateRegisterInfo, user, profileInfo, updateAddProfile, updateExistProfile, setProfileInfo, updateSelectedUser, selectedUser, setSelectedUser , setSelectedMovie, selectedMovie}} >
+        <AuthContext.Provider value={{ loadingProfiles, loginInfo, updateLoginInfo, sendLoginInfo, registerInfo, updateRegisterInfo, user, profileInfo, updateAddProfile, updateExistProfile, setProfileInfo, updateSelectedUser, selectedUser, setSelectedUser , setSelectedMovie, selectedMovie, movieList, setSelectedMovie}} >
             {children}
         </AuthContext.Provider>
     );
