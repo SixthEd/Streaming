@@ -19,6 +19,7 @@ const AuthContextProvider = ({ children }) => {
 
     const [loadingProfiles, setLoadingProfiles] = React.useState(true);
     const [movieList, setMovieList] = React.useState(null);
+    const [horrorList, setHorrorList] = React.useState(null);
 
     const updateSelectedUser = React.useCallback((info)=>{
         console.log(profileInfo)
@@ -74,7 +75,9 @@ const AuthContextProvider = ({ children }) => {
             setUser(null);
             setSelectedUser(null);
         }
-        axiosInstance.get("/movielist").then((response)=>{setMovieList(response.data.titles)}).catch((err)=>{
+        axiosInstance.get("/movielist",{
+            params:{info:"drama"}
+        }).then((response)=>{setMovieList(response.data.titles)}).catch((err)=>{
             console.log(err)
         })
     }, [])

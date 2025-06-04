@@ -275,7 +275,7 @@ h3 {
   gap: 30px;
 }
 
-.profile-container-p{
+.profile-container-p {
   font-size: xxx-large;
 }
 
@@ -441,7 +441,7 @@ input[type="checkbox"]:checked {
   gap: 30px;
 }
 
-.watching-container-p{
+.watching-container-p {
   font-size: xxx-large;
 }
 
@@ -803,7 +803,7 @@ a {
 .card-wrapper:hover .card-content {
   display: flex;
   flex-direction: column;
-  gap:5px;
+  gap: 5px;
 }
 
 .card {
@@ -1036,7 +1036,8 @@ input[type=range] {
 
 .mylist-bottom {
   width: 100%;
-  height: 20vh;
+  height: 25vh;
+  /* border: 1px solid white; */
 }
 
 .card p {
@@ -1082,7 +1083,8 @@ input[type=range] {
 
 
   /* From https://css.glass */
-  background: rgba(0, 0, 0, 0.8);
+  background: rgb(34 32 32 / 80%);
+
   border-radius: 5px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(9.1px);
@@ -1143,75 +1145,176 @@ input[type=range] {
   padding-right: 10px;
 }
 
-.side-cardinfo-content{
+.side-cardinfo-content {
   width: 90%;
-  
+
   margin: 0 auto;
 }
 
-.rating{
-  border:1px solid white
+.rating {
+  border: 1px solid white;
+  line-height: 1.5;
+  font-size: 14px;
 }
 
-.side-cardinfo-content .left{
+.side-cardinfo-content .left {
   width: 60%;
 }
-.side-cardinfo .right{
+
+.side-cardinfo .right {
   width: 30%;
 }
 
-.side-cardinfo-top{
+.side-cardinfo-top {
   width: 100%;
   display: flex;
-  gap:60px;
+  gap: 60px;
 }
 
-.dob-time, .cast , .genre{
-  color:#929292;
+.dob-time,
+.cast,
+.genre {
+  color: #929292;
 }
 
 
 
 
-.card-content span{
+.card-content span {
   font-size: small;
   /* width: 40px; */
-  border:1px solid white;
+  border: 1px solid white;
 }
-.subContent-p{
+
+.subContent-p {
   font-size: x-small;
   display: flex;
-  gap:5px;
+  gap: 5px;
   flex-wrap: wrap;
 }
 
-.card-c .img-video{
+.card-c .img-video {
   position: relative;
 }
 
-.card-c .img-video img{
+.card-c .img-video img {
   position: absolute;
   width: 150px;
   height: 60px;
   bottom: 5px;
 }
 
-.side-img-video{
-  position:relative
+.side-img-video {
+  position: relative
 }
 
-.side-img-video img{
-  position:absolute;
-  left:100px;
+.side-img-video img {
+  position: absolute;
+  left: 100px;
   bottom: 120px;
   width: 300px;
-  
+
 }
 
-.cast span{
-  color: white
+.cast span {
+  color: white;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-.genre span{
-  color: white
+.genre span {
+  color: white;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.left-context {
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.rating-tags {
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.subContent-Context {
+  width: 93%;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+.side-card-more {
+  /* border: 1px solid white; */
+  height: 100vh;
+  line-height: 3.5;
+}
+
+.side-moreCard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.side-card {
+  width: 100%;
+  height: 300px;
+}
+
+.sidecard-wrapper {
+  width: 261px;
+  background-color: #2f2f2f;
+  border-radius: 5px;
+  color: #d2d2d2;
+  font-size: 14px;
+  line-height: 20px;
+  height: 410px;
+}
+
+.side-card video {
+  width: 100%;
+  border-radius: 5px;
+
+}
+
+
+.sidecard-subContent {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.sidecard-subrating {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidecardinfo-title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  margin-top: 48px;
+
+}
+
+.sidecard-subrating span{
+  border: 1px solid white;
+}
+
+/* .sidecard-context{
+  line-height: 2.0;
+} */
+
+.sidecard-context span{
+  color:#929292;
+}
+
+.side-rating{
+  margin: 6px 0;
+}
+
+.side-title{
+  margin: 6px 0;
 }

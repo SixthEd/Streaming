@@ -43,8 +43,6 @@ function MyList(props) {
 
                 <div className="mylist-para"><p>My List</p></div>
                 <div className="movies">
-
-
                 </div>
                 <div className="mylist-card">
                     <div className="mylist-cardls">
@@ -67,12 +65,10 @@ function MyList(props) {
                                 </div>
                             </div>
                         </div>
+                        <div className="mylist-bottom"></div>
                     </div>
                 </div>
-                <div className="mylist-bottom"></div>
-
             </div>
-
         }
     </div>
 }

@@ -82,11 +82,13 @@ function Movies(props) {
                                     <AddCircleOutlineOutlinedIcon sx={{ fontSize: 45 }} />
                                 </div>
                                 <div>
-                                    <ExpandCircleDownOutlinedIcon sx={{ fontSize: 45 }} onClick={() => { props.sideInfo({ tags:movie.jawSummary.tags ,poster: movie.jawSummary.backgroundImage.url, image: movie.jawSummary.logoImage.url, videoId: movie.jawSummary.trackIds.videoId, cast: movie.jawSummary.cast, genres: movie.jawSummary.genres, rating: movie.jawSummary.maturity.rating.value, context: movie.jawSummary.contextualSynopsis.text }) }} />
+                                    <ExpandCircleDownOutlinedIcon sx={{ fontSize: 45 }} onClick={() => { props.sideInfo({ tags: movie.jawSummary.tags, poster: movie.jawSummary.backgroundImage.url, image: movie.jawSummary.logoImage.url, videoId: movie.jawSummary.trackIds.videoId, cast: movie.jawSummary.cast, genres: movie.jawSummary.genres, rating: movie.jawSummary.maturity.rating.value, context: movie.jawSummary.contextualSynopsis.text }) }} />
                                 </div>
                             </div>
-                            <div ><span>{movie.jawSummary.maturity.rating.value}</span></div>
-                            <div className="subContent-p">{movie.jawSummary.genres.map((genre) => <li>{genre.name}</li>)}</div>
+                            <div className="subContent-Context">
+                                <div ><span>{movie.jawSummary.maturity.rating.value}</span></div>
+                                <div className="subContent-p">{movie.jawSummary.tags.map((tag) => <li>{tag.name}</li>)}</div>
+                            </div>
                         </div>
                     </div>
                 </div>

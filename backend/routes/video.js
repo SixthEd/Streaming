@@ -38,20 +38,23 @@ streamroute.get("/media", (req, res) => {
 
 
 streamroute.get("/movielist", (req, res) => {
+    const info = req.query.info;
+    const movieList ={};
     const options = {
         method: 'GET',
         url: 'https://netflix54.p.rapidapi.com/search/',
         params: {
-            query: 'drama',
+            query: info,
             offset: '0',
             limit_titles: '50',
             limit_suggestions: '20',
             lang: 'en'
         },
-        headers: {
-            'x-rapidapi-key': '993a269cb4msh4abb22400ae5aa1p1a128fjsnc0753ac5aba6',
-            'x-rapidapi-host': 'netflix54.p.rapidapi.com'
-        }
+      headers: {
+		'x-rapidapi-key': 'd63db78f9amshc2d7d4e90be5377p129b18jsnb10ca9a0a0e6',
+		'x-rapidapi-host': 'netflix54.p.rapidapi.com'
+	}
+
     };
 
     async function fetchData() {
@@ -75,9 +78,9 @@ streamroute.get("/movieTrailer", (req, res) => {
             contentId: info
         },
         headers: {
-            'x-rapidapi-key': '993a269cb4msh4abb22400ae5aa1p1a128fjsnc0753ac5aba6',
-            'x-rapidapi-host': 'netflix133.p.rapidapi.com'
-        }
+		'x-rapidapi-key': 'f53a9072eamsh72ed226693e68a0p12185bjsn055b60771f76',
+		'x-rapidapi-host': 'netflix133.p.rapidapi.com'
+	}
     };
 
     async function fetchData() {
@@ -92,6 +95,40 @@ streamroute.get("/movieTrailer", (req, res) => {
 
     fetchData();
     // res.json(req.query.info)
+})
+
+streamroute.get("/similarTitles", (req, res) => {
+    const info = req.query.info;
+    console.log(info)
+
+    const options = {
+        method: 'GET',
+        url: 'https://netflix54.p.rapidapi.com/title/similars/',
+        params: {
+            id: info,
+            offset: '0',
+            limit: '18',
+            lang: 'en'
+        },
+     headers: {
+		'x-rapidapi-key': 'd63db78f9amshc2d7d4e90be5377p129b18jsnb10ca9a0a0e6',
+		'x-rapidapi-host': 'netflix54.p.rapidapi.com'
+	}
+
+
+    };
+
+    async function fetchData() {
+        try {
+            const response = await axios.request(options);
+            res.status(200).json(response.data);
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    fetchData();
 })
 
 export { streamroute };
