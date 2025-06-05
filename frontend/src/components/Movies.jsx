@@ -17,7 +17,7 @@ function Movies(props) {
     const navigate = useNavigate();
 
     const CARD_WIDTH = 96; // in vw
-    const TOTAL_CARDS = 3.6;
+    const TOTAL_CARDS = 7;
     const VISIBLE_CARDS = 1;
     const MAX_SCROLL = -((TOTAL_CARDS - VISIBLE_CARDS) * CARD_WIDTH); // -295.323vw
 
@@ -52,7 +52,7 @@ function Movies(props) {
 
     return <div className="movie-card">
         <div className="title">
-            <h2>Movie</h2></div>
+            <h2>{props.movies?.genre}</h2></div>
         <div
             className="left-scroll"
             style={{ display: leftScroll === 0 ? "none" : "flex" }}
@@ -71,7 +71,7 @@ function Movies(props) {
             transform: `translateX(${leftScroll}vw)`
         }}>
 
-            {holdMovies && props.movies.map((movie) => < div className="card-wrapper">
+            {holdMovies && props.movies.data.titles.map((movie) => < div className="card-wrapper">
                 <div className="card">
                     <div className="card-c">
                         <div className="img-video"><img src={movie.jawSummary.logoImage.url} alt="" /><video poster={movie.jawSummary.backgroundImage.url}></video></div>
@@ -82,7 +82,8 @@ function Movies(props) {
                                     <AddCircleOutlineOutlinedIcon sx={{ fontSize: 45 }} />
                                 </div>
                                 <div>
-                                    <ExpandCircleDownOutlinedIcon sx={{ fontSize: 45 }} onClick={() => { props.sideInfo({ tags: movie.jawSummary.tags, poster: movie.jawSummary.backgroundImage.url, image: movie.jawSummary.logoImage.url, videoId: movie.jawSummary.trackIds.videoId, cast: movie.jawSummary.cast, genres: movie.jawSummary.genres, rating: movie.jawSummary.maturity.rating.value, context: movie.jawSummary.contextualSynopsis.text }) }} />
+                                    <ExpandCircleDownOutlinedIcon sx={{ fontSize: 45 }} onClick={() => { props.sideInfo({ 
+                                      year: movie.jawSummary.releaseYear,title: movie.jawSummary.title  ,maturityDescription : movie.jawSummary.maturity.rating.maturityDescription ,specificRatingReason : movie.jawSummary.maturity.rating.specificRatingReason,tags: movie.jawSummary.tags, poster: movie.jawSummary.backgroundImage.url, image: movie.jawSummary.logoImage.url, videoId: movie.jawSummary.trackIds.videoId, cast: movie.jawSummary.cast, genres: movie.jawSummary.genres, rating: movie.jawSummary.maturity.rating.value, context: movie.jawSummary.contextualSynopsis.text }) }} />
                                 </div>
                             </div>
                             <div className="subContent-Context">

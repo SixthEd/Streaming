@@ -53,13 +53,14 @@ function Browser() {
             </div>
             <div className="movies-informations">
                <div className="movies">
-                  <Movies sideInfo={updateToggleSideInfo} movies={movieList}/>
+                  {movieList?.map((moviels)=><Movies sideInfo={updateToggleSideInfo} movies={moviels}/>)}
+                  {/* <Movies sideInfo={updateToggleSideInfo} movies={movieList}/>
+                  
                   <Movies sideInfo={updateToggleSideInfo} />
                   <Movies sideInfo={updateToggleSideInfo} />
                   <Movies sideInfo={updateToggleSideInfo} />
                   <Movies sideInfo={updateToggleSideInfo} />
-                  <Movies sideInfo={updateToggleSideInfo} />
-                  <Movies sideInfo={updateToggleSideInfo} />
+                  <Movies sideInfo={updateToggleSideInfo} /> */}
                </div>
 
             </div>

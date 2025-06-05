@@ -37,35 +37,40 @@ streamroute.get("/media", (req, res) => {
 
 
 
-streamroute.get("/movielist", (req, res) => {
-    const info = req.query.info;
-    const movieList ={};
-    const options = {
-        method: 'GET',
-        url: 'https://netflix54.p.rapidapi.com/search/',
-        params: {
-            query: info,
-            offset: '0',
-            limit_titles: '50',
-            limit_suggestions: '20',
-            lang: 'en'
-        },
-      headers: {
-		'x-rapidapi-key': 'd63db78f9amshc2d7d4e90be5377p129b18jsnb10ca9a0a0e6',
-		'x-rapidapi-host': 'netflix54.p.rapidapi.com'
-	}
+streamroute.get("/movielist", async (req, res) => {
+    const genres = ["Drama", "Sci-Fi", "Action", "Horror", "Romance"];
 
-    };
+    try {
+        const results = await Promise.all(
+            genres.map((genre) =>
+                axios.request({
+                    method: "GET",
+                    url: "https://netflix54.p.rapidapi.com/search/",
+                    params: {
+                        query: genre,
+                        offset: "0",
+                        limit_titles: "50",
+                        limit_suggestions: "20",
+                        lang: "en",
+                    },
+                    headers: {
+                        'x-rapidapi-key': '841df02299msh2eb9efa70e5cf7fp1be903jsncb33d9e2e96b',
+                        'x-rapidapi-host': 'netflix54.p.rapidapi.com'
+                    }
+                })
+            )
+        );
 
-    async function fetchData() {
-        try {
-            const response = await axios.request(options);
-            res.status(200).json(response.data)
-        } catch (error) {
-            console.error(error);
-        }
+        // Merge or process results
+        const combinedResults = genres.map((genre, index) => ({
+            genre,
+            data: results[index].data
+        }));
+        res.status(200).json(combinedResults); // ✅ send only one response
+    } catch (error) {
+        console.error("Error fetching movie list:", error);
+        res.status(500).json({ error: "Failed to fetch movie list" }); // ✅ send only one error response
     }
-    fetchData()
 })
 
 streamroute.get("/movieTrailer", (req, res) => {
@@ -78,9 +83,9 @@ streamroute.get("/movieTrailer", (req, res) => {
             contentId: info
         },
         headers: {
-		'x-rapidapi-key': 'f53a9072eamsh72ed226693e68a0p12185bjsn055b60771f76',
-		'x-rapidapi-host': 'netflix133.p.rapidapi.com'
-	}
+            'x-rapidapi-key': '841df02299msh2eb9efa70e5cf7fp1be903jsncb33d9e2e96b',
+            'x-rapidapi-host': 'netflix133.p.rapidapi.com'
+        }
     };
 
     async function fetchData() {
@@ -110,10 +115,10 @@ streamroute.get("/similarTitles", (req, res) => {
             limit: '18',
             lang: 'en'
         },
-     headers: {
-		'x-rapidapi-key': 'd63db78f9amshc2d7d4e90be5377p129b18jsnb10ca9a0a0e6',
-		'x-rapidapi-host': 'netflix54.p.rapidapi.com'
-	}
+        headers: {
+            'x-rapidapi-key': '841df02299msh2eb9efa70e5cf7fp1be903jsncb33d9e2e96b',
+            'x-rapidapi-host': 'netflix54.p.rapidapi.com'
+        }
 
 
     };

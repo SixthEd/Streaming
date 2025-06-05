@@ -76,8 +76,8 @@ const AuthContextProvider = ({ children }) => {
             setSelectedUser(null);
         }
         axiosInstance.get("/movielist",{
-            params:{info:"drama"}
-        }).then((response)=>{setMovieList(response.data.titles)}).catch((err)=>{
+        }).then((response)=>{
+            console.log(response.data); setMovieList(response.data)}).catch((err)=>{
             console.log(err)
         })
     }, [])
