@@ -54,7 +54,7 @@ streamroute.get("/movielist", async (req, res) => {
                         lang: "en",
                     },
                     headers: {
-                        'x-rapidapi-key': '65807cb9ecmsh33756f74c2919ecp15982fjsn66e4ca66c1fc',
+                        'x-rapidapi-key': '9292f8f6f7msh9cbe946808b5240p141320jsnb39b19a7d89d',
                         'x-rapidapi-host': 'netflix54.p.rapidapi.com'
                     }
                 })
@@ -66,7 +66,10 @@ streamroute.get("/movielist", async (req, res) => {
             genre,
             data: results[index].data
         }));
-        res.status(200).json(combinedResults); // ✅ send only one response
+        const randomNumber = Math.floor(Math.random() * combinedResults.length);
+        const randomTitle = Math.floor(Math.random() * combinedResults[randomNumber].data.titles.length)
+        const randomMovie = combinedResults[randomNumber].data.titles[randomTitle].jawSummary
+        res.status(200).json({ combinedResults, randomMovie }); // ✅ send only one response
     } catch (error) {
         console.error("Error fetching movie list:", error);
         res.status(500).json({ error: "Failed to fetch movie list" }); // ✅ send only one error response
@@ -83,7 +86,7 @@ streamroute.get("/movieTrailer", (req, res) => {
             contentId: info
         },
         headers: {
-            'x-rapidapi-key': '65807cb9ecmsh33756f74c2919ecp15982fjsn66e4ca66c1fc',
+            'x-rapidapi-key': '9292f8f6f7msh9cbe946808b5240p141320jsnb39b19a7d89d',
             'x-rapidapi-host': 'netflix133.p.rapidapi.com'
         }
 
@@ -117,9 +120,10 @@ streamroute.get("/similarTitles", (req, res) => {
             lang: 'en'
         },
         headers: {
-            'x-rapidapi-key': '65807cb9ecmsh33756f74c2919ecp15982fjsn66e4ca66c1fc',
+            'x-rapidapi-key': '9292f8f6f7msh9cbe946808b5240p141320jsnb39b19a7d89d',
             'x-rapidapi-host': 'netflix54.p.rapidapi.com'
         }
+
 
 
     };
@@ -152,9 +156,10 @@ streamroute.get("/genre", (req, res) => {
             lang: "en",
         },
         headers: {
-            'x-rapidapi-key': '65807cb9ecmsh33756f74c2919ecp15982fjsn66e4ca66c1fc',
+            'x-rapidapi-key': '9292f8f6f7msh9cbe946808b5240p141320jsnb39b19a7d89d',
             'x-rapidapi-host': 'netflix54.p.rapidapi.com'
         }
+
     };
 
     async function fetchData() {

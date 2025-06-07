@@ -91,11 +91,11 @@ function Anime(props) {
                 </div>
                 <div className="mylist-card">
                     <div className="mylist-cardls">
-                        {animeList ? animeList.map((show) => (<div className="card-wrapper">
+                        {animeList ? animeList.map((show, i) => (<div className="card-wrapper" key={i}>
                             <div className="card">
                                 <div className="card-c">
                                     <div className="mylist-img-video">
-                                        <img src={show.jawSummary.logoImage.url} alt="" />
+                                        <img src={show.jawSummary.logoImage?.url} alt="" />
                                         <video src="" poster={show.jawSummary.backgroundImage.url} alt="" > </video>
                                     </div>
                                     <div className="card-content" >
@@ -106,12 +106,12 @@ function Anime(props) {
 
                                             </div>
                                             <div>
-                                                <ExpandCircleDownOutlinedIcon sx={{ fontSize: 45, fill: "white" }} onClick={() => { updateToggleSideInfo({ profileId: JSON.parse(localStorage.getItem("selectedUser")).profile_id, id: show.summary.id, logo: show.jawSummary.logoImage.url, year: show.jawSummary.releaseYear, title: show.jawSummary.title, maturityDescription: show.jawSummary.maturity.rating.maturityDescription, specificRatingReason: show.jawSummary.maturity.rating.specificRatingReason, tags: show.jawSummary.tags, poster: show.jawSummary.backgroundImage.url, image: show.jawSummary.logoImage.url, videoId: show.jawSummary.trackIds.videoId, cast: show.jawSummary.cast, genres: show.jawSummary.genres, rating: show.jawSummary.maturity.rating.value, context: show.jawSummary.contextualSynopsis.text }) }} />
+                                                <ExpandCircleDownOutlinedIcon sx={{ fontSize: 45, fill: "white" }} onClick={() => { updateToggleSideInfo({ profileId: JSON.parse(localStorage.getItem("selectedUser")).profile_id, id: show.summary.id, logo: show.jawSummary.logoImage?.url, year: show.jawSummary.releaseYear, title: show.jawSummary.title, maturityDescription: show.jawSummary.maturity.rating.maturityDescription, specificRatingReason: show.jawSummary.maturity.rating.specificRatingReason, tags: show.jawSummary.tags, poster: show.jawSummary.backgroundImage.url, image: show.jawSummary.logoImage.url, videoId: show.jawSummary.trackIds.videoId, cast: show.jawSummary.cast, genres: show.jawSummary.genres, rating: show.jawSummary.maturity.rating.value, context: show.jawSummary.contextualSynopsis.text }) }} />
                                             </div>
                                         </div>
                                         <div className="subContent-Context">
                                             <div ><span>{show.jawSummary.maturity.rating.value}</span></div>
-                                            <div className="subContent-p">{show.jawSummary.tags.map((tag) => <li>{tag.name}</li>)}</div>
+                                            <div className="subContent-p">{show.jawSummary.tags.map((tag,i) => <li key={i}>{tag.name}</li>)}</div>
                                         </div>
                                     </div>
                                 </div>
