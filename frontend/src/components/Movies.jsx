@@ -10,7 +10,7 @@ import axiosInstance from "../utils";
 
 
 function Movies(props) {
-    const { setSelectedMovie } = useContext(AuthContext);
+    const { setSelectedMovie , updateMyList} = useContext(AuthContext);
 
     const [holdMovies, setHoldMovies] = useState(false);
 
@@ -71,7 +71,7 @@ function Movies(props) {
             transform: `translateX(${leftScroll}vw)`
         }}>
 
-            {holdMovies && props.movies.data.titles.map((movie) => < div className="card-wrapper">
+            {holdMovies && props.movies.data.titles.map((movie,i) => < div className="card-wrapper" key={movie.summary.id}>
                 <div className="card">
                     <div className="card-c">
                         <div className="img-video"><img src={movie.jawSummary.logoImage.url} alt="" /><video poster={movie.jawSummary.backgroundImage.url}></video></div>
@@ -79,16 +79,16 @@ function Movies(props) {
                             <div className="card-subContent">
                                 <div>
                                     <PlayCircleIcon sx={{ fontSize: 45 }} onClick={() => { streaming(movie.jawSummary.trackIds.videoId) }} />
-                                    <AddCircleOutlineOutlinedIcon sx={{ fontSize: 45 }} />
+                                    <AddCircleOutlineOutlinedIcon sx={{ fontSize: 45 }} onClick={()=>{updateMyList({profileId: JSON.parse(localStorage.getItem("selectedUser")).profile_id ,id:movie.summary.id ,logo:movie.jawSummary.logoImage.url, year: movie.jawSummary.releaseYear,title: movie.jawSummary.title  ,maturityDescription : movie.jawSummary.maturity.rating.maturityDescription ,specificRatingReason : movie.jawSummary.maturity.rating.specificRatingReason,tags: movie.jawSummary.tags, poster: movie.jawSummary.backgroundImage.url, image: movie.jawSummary.logoImage.url, videoId: movie.jawSummary.trackIds.videoId, cast: movie.jawSummary.cast, genres: movie.jawSummary.genres, rating: movie.jawSummary.maturity.rating.value, context: movie.jawSummary.contextualSynopsis.text})}} />
                                 </div>
                                 <div>
                                     <ExpandCircleDownOutlinedIcon sx={{ fontSize: 45 }} onClick={() => { props.sideInfo({ 
-                                      year: movie.jawSummary.releaseYear,title: movie.jawSummary.title  ,maturityDescription : movie.jawSummary.maturity.rating.maturityDescription ,specificRatingReason : movie.jawSummary.maturity.rating.specificRatingReason,tags: movie.jawSummary.tags, poster: movie.jawSummary.backgroundImage.url, image: movie.jawSummary.logoImage.url, videoId: movie.jawSummary.trackIds.videoId, cast: movie.jawSummary.cast, genres: movie.jawSummary.genres, rating: movie.jawSummary.maturity.rating.value, context: movie.jawSummary.contextualSynopsis.text }) }} />
+                                      id:movie.summary.id ,logo:movie.jawSummary.logoImage.url, year: movie.jawSummary.releaseYear,title: movie.jawSummary.title  ,maturityDescription : movie.jawSummary.maturity.rating.maturityDescription ,specificRatingReason : movie.jawSummary.maturity.rating.specificRatingReason,tags: movie.jawSummary.tags, poster: movie.jawSummary.backgroundImage.url, image: movie.jawSummary.logoImage.url, videoId: movie.jawSummary.trackIds.videoId, cast: movie.jawSummary.cast, genres: movie.jawSummary.genres, rating: movie.jawSummary.maturity.rating.value, context: movie.jawSummary.contextualSynopsis.text }) }} />
                                 </div>
                             </div>
                             <div className="subContent-Context">
                                 <div ><span>{movie.jawSummary.maturity.rating.value}</span></div>
-                                <div className="subContent-p">{movie.jawSummary.tags.map((tag) => <li>{tag.name}</li>)}</div>
+                                <div className="subContent-p">{movie.jawSummary.tags.map((tag,i) => <li key={i}>{tag.name}</li>)}</div>
                             </div>
                         </div>
                     </div>

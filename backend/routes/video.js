@@ -54,7 +54,7 @@ streamroute.get("/movielist", async (req, res) => {
                         lang: "en",
                     },
                     headers: {
-                        'x-rapidapi-key': '841df02299msh2eb9efa70e5cf7fp1be903jsncb33d9e2e96b',
+                        'x-rapidapi-key': '65807cb9ecmsh33756f74c2919ecp15982fjsn66e4ca66c1fc',
                         'x-rapidapi-host': 'netflix54.p.rapidapi.com'
                     }
                 })
@@ -83,9 +83,10 @@ streamroute.get("/movieTrailer", (req, res) => {
             contentId: info
         },
         headers: {
-            'x-rapidapi-key': '841df02299msh2eb9efa70e5cf7fp1be903jsncb33d9e2e96b',
+            'x-rapidapi-key': '65807cb9ecmsh33756f74c2919ecp15982fjsn66e4ca66c1fc',
             'x-rapidapi-host': 'netflix133.p.rapidapi.com'
         }
+
     };
 
     async function fetchData() {
@@ -116,7 +117,7 @@ streamroute.get("/similarTitles", (req, res) => {
             lang: 'en'
         },
         headers: {
-            'x-rapidapi-key': '841df02299msh2eb9efa70e5cf7fp1be903jsncb33d9e2e96b',
+            'x-rapidapi-key': '65807cb9ecmsh33756f74c2919ecp15982fjsn66e4ca66c1fc',
             'x-rapidapi-host': 'netflix54.p.rapidapi.com'
         }
 
@@ -136,4 +137,98 @@ streamroute.get("/similarTitles", (req, res) => {
     fetchData();
 })
 
+
+streamroute.get("/genre", (req, res) => {
+    const genre = req.query.genre;
+    console.log(genre);
+    const options = {
+        method: "GET",
+        url: "https://netflix54.p.rapidapi.com/search/",
+        params: {
+            query: genre,
+            offset: "0",
+            limit_titles: "100",
+            limit_suggestions: "20",
+            lang: "en",
+        },
+        headers: {
+            'x-rapidapi-key': '65807cb9ecmsh33756f74c2919ecp15982fjsn66e4ca66c1fc',
+            'x-rapidapi-host': 'netflix54.p.rapidapi.com'
+        }
+    };
+
+    async function fetchData() {
+        try {
+            const response = await axios.request(options);
+            res.status(200).json(response.data);
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    fetchData();
+
+
+
+})
+
+// streamroute.get("/cinema", (req, res) => {
+//     const options = {
+//         method: "GET",
+//         url: "https://netflix54.p.rapidapi.com/search/",
+//         params: {
+//             query: "movies",
+//             offset: "0",
+//             limit_titles: "100",
+//             limit_suggestions: "20",
+//             lang: "en",
+//         },
+//         headers: {
+//             'x-rapidapi-key': '118ecc1808msh6f72e2dd3e06f4cp1803b1jsn1ca6d5a043db',
+//             'x-rapidapi-host': 'netflix54.p.rapidapi.com'
+//         }
+//     };
+
+//     async function fetchData() {
+//         try {
+//             const response = await axios.request(options);
+//             res.status(200).json(response.data);
+
+//         } catch (error) {
+//             console.error(error);
+//         }
+//     }
+
+//     fetchData();
+
+
+
+// })
+
+
+
+streamroute.post("/addmovie", async (req, res) => {
+    console.log(req.body)
+    const { id, logo, year, title, maturityDescription, specificRatingReason, tags, poster, cast, genres, rating, context, profileId } = (req.body);
+    await db.query(`INSERT INTO mylist (movieId, logo, year, title, maturity_description, specific_rating_reason, tags, poster, casting, genres, rating, context, profile_id) 
+        VALUES($1, $2, $3, $4, $5 ,$6, $7, $8, $9, $10, $11, $12, $13)`, [id, logo, year, title, maturityDescription, specificRatingReason, JSON.stringify(tags), poster, JSON.stringify(cast), JSON.stringify(genres), rating, context, profileId])
+    res.status(200).json({ message: "added" })
+})
+
+streamroute.get("/mymovies", async (req, res) => {
+    console.log(req.query.profileId)
+    const profile_id = req.query.profileId;
+    const response = await db.query("Select * from mylist where profile_id=$1", [profile_id]);
+    console.log(response.rows[0])
+    res.status(200).json(response.rows)
+})
+
+
+streamroute.delete("/removemovie", async (req, res) => {
+    const { id, profileId } = req.body;
+    console.log(id, profileId)
+    await db.query("Delete from mylist where movieid=$1 AND profile_id=$2", [id, profileId])
+    res.status(200).json("Deleted")
+})
 export { streamroute };

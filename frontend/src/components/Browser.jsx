@@ -3,15 +3,17 @@ import Navbar from "./Navbar";
 import Movies from "./Movies";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
-
+import axiosInstance from "../utils";
 import SideInfo from "./SideInfo";
 import { AuthContext } from "./AuthContext";
 
 function Browser() {
 
-   const {movieList, setSelectedMovie, selectedMovie} =useContext(AuthContext)
+   const { setSelectedMovie, selectedMovie } = useContext(AuthContext)
    const [toggleSideinfo, setToggleSideInfo] = useState(false);
    const [sideSelectedMovie, setSideSelectedMovie] = useState(null);
+   const [movieList, setMovieList] = React.useState(null);
+
 
    const updateToggleSideInfo = useCallback((info) => {
       console.log(info)
@@ -25,12 +27,19 @@ function Browser() {
       //    setSelectedMovie(info)
       // }
 
-      
+
    }, [])
 
+   useEffect(()=>{
+      axiosInstance.get("/movielist",{
+        }).then((response)=>{
+            console.log(response.data); setMovieList(response.data)}).catch((err)=>{
+            console.log(err)
+        })
+   },[])
 
    return <div className="browser">
-      {toggleSideinfo && <SideInfo sideInfo={updateToggleSideInfo} movieInfo={sideSelectedMovie}/>}
+      {toggleSideinfo && <SideInfo sideInfo={updateToggleSideInfo} movieInfo={sideSelectedMovie} />}
 
       <Navbar />
 
@@ -53,14 +62,7 @@ function Browser() {
             </div>
             <div className="movies-informations">
                <div className="movies">
-                  {movieList?.map((moviels)=><Movies sideInfo={updateToggleSideInfo} movies={moviels}/>)}
-                  {/* <Movies sideInfo={updateToggleSideInfo} movies={movieList}/>
-                  
-                  <Movies sideInfo={updateToggleSideInfo} />
-                  <Movies sideInfo={updateToggleSideInfo} />
-                  <Movies sideInfo={updateToggleSideInfo} />
-                  <Movies sideInfo={updateToggleSideInfo} />
-                  <Movies sideInfo={updateToggleSideInfo} /> */}
+                  {movieList?.map((moviels, i) => <Movies key={i} sideInfo={updateToggleSideInfo} movies={moviels} />)}
                </div>
 
             </div>

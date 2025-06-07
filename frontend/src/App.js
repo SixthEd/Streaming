@@ -10,6 +10,11 @@ import Managewindow from "./components/Managewindow.jsx";
 import Browser from "./components/Browser.jsx";
 import Video from "./components/Video.jsx";
 import MyList from "./components/MyList.jsx";
+import TvShow from "./components/TvShow.jsx";
+import Cinema from "./components/Cinema.jsx";
+import Anime from "./components/Anime.jsx";
+import Search from "./components/Search.jsx";
+
 
 function App() {
     const { user, selectedUser } = useContext(AuthContext);
@@ -49,6 +54,22 @@ function App() {
                     <Route
                         path="/mylist"
                         element={<MyList />}>
+                    </Route>
+                    < Route
+                        path="/tvshows"
+                        element={<TvShow />}>
+                    </Route>
+                    < Route
+                        path="/cinema"
+                        element={<Cinema />}>
+                    </Route>
+                    < Route
+                        path="/anime"
+                        element={<Anime />}>
+                    </Route>
+                    < Route
+                        path="/search"
+                        element={<Search />}>
                     </Route>
                 </Routes>
             </BrowserRouter>

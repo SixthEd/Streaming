@@ -230,7 +230,7 @@ h3 {
 
 .input-eye span {
   position: absolute;
-  right: 70px
+  right: 20px
 }
 
 
@@ -238,7 +238,7 @@ h3 {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: 'relative';
+  position: relative;
   width: 100%;
 }
 
@@ -262,6 +262,7 @@ h3 {
   flex-direction: column;
   color: grey;
   gap: 10px;
+  cursor: pointer;
 }
 
 .profile-container {
@@ -700,6 +701,7 @@ a {
   backdrop-filter: blur(0.8px);
   -webkit-backdrop-filter: blur(0.8px);
   border: none;
+  cursor: pointer;
 }
 
 .play-arrow:hover {
@@ -785,6 +787,7 @@ a {
   /* height: 300px; */
   height: 150px;
   background: #191919;
+  cursor: pointer;
 }
 
 .card video {
@@ -1026,6 +1029,7 @@ input[type=range] {
 
 .mylist-card .card-wrapper {
   height: 170px;
+  background-color: black;
 }
 
 /* .mylist-card .card-wrapper .card-content{
@@ -1113,6 +1117,7 @@ input[type=range] {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .side-cardinfo .c {
@@ -1157,7 +1162,7 @@ input[type=range] {
   border: 1px solid white;
   line-height: 1.5;
   font-size: 14px;
-  padding: 2px;
+  padding: 4px;
   margin-right: 2px;
 }
 
@@ -1188,6 +1193,7 @@ input[type=range] {
   font-size: small;
   /* width: 40px; */
   border: 1px solid white;
+  padding: 2px;
 }
 
 .subContent-p {
@@ -1246,6 +1252,7 @@ input[type=range] {
 .subContent-Context {
   width: 93%;
   margin: 0 auto;
+  color: white;
   line-height: 1.5;
 }
 
@@ -1258,6 +1265,7 @@ input[type=range] {
 .side-moreCard {
   display: flex;
   flex-wrap: wrap;
+  /* flex-direction: column; */
   gap: 20px;
 }
 
@@ -1283,10 +1291,10 @@ input[type=range] {
 }
 
 
-.sidecard-subContent {
+.sidecard-content {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 92%;
   margin: 0 auto;
 }
 
@@ -1306,6 +1314,8 @@ input[type=range] {
 
 .sidecard-subrating span {
   border: 1px solid white;
+  margin-top: 10px;
+  padding: 2px;
 }
 
 /* .sidecard-context{
@@ -1354,11 +1364,43 @@ input[type=range] {
   display: none;
 }
 
-.sidecard-wrapper:hover .sidecard-img-videobutton{
+.sidecard-wrapper:hover .sidecard-img-videobutton {
   display: block;
- 
+
 }
 
-.sidecard-wrapper:hover{
-   cursor: pointer;
+.sidecard-wrapper:hover {
+  cursor: pointer;
+}
+
+.mylist-img-video img {
+  position: absolute;
+  width: 150px;
+  height: 60px;
+  bottom: 5px;
+  left: 4px;
+}
+
+.mylist-img-video {
+  position: relative;
+}
+
+.addbutton {
+  cursor: pointer;
+}
+
+
+.left-search form{
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+
+.left-search button{
+  position: absolute;
+  right: 0;
+  background-color: transparent;
+  border: 0px;
+  
 }

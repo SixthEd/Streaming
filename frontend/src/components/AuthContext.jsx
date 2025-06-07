@@ -13,13 +13,16 @@ const AuthContextProvider = ({ children }) => {
     const [profileInfo, setProfileInfo] = React.useState(null);
     const [user, setUser] = React.useState(null);
     const [selectedUser, setSelectedUser] = React.useState(null);
-
     const [selectedMovie, setSelectedMovie] = React.useState({});
-    
+    const [searchMovie, setSearchMovie] = React.useState("");
+
 
     const [loadingProfiles, setLoadingProfiles] = React.useState(true);
-    const [movieList, setMovieList] = React.useState(null);
-    const [horrorList, setHorrorList] = React.useState(null);
+    const [myList, setMyList] = React.useState([]);
+
+    const updateSearchMovie = React.useCallback((info)=>{
+        setSearchMovie(info)
+    },[])
 
     const updateSelectedUser = React.useCallback((info)=>{
         console.log(profileInfo)
@@ -29,12 +32,17 @@ const AuthContextProvider = ({ children }) => {
     },[profileInfo])
 
 
+    const updateMyList = useCallback(async(info)=>{
+        setMyList((old)=>[...old,info]);
+        axiosInstance.post("/addmovie",info).then((response)=>{console.log(response.data)}).catch((err)=>{console.log(err)});
+    },[])
+
 
     const updateAddProfile = React.useCallback((info)=>{
         info.profile_id = uuidv4();
         console.log(info);
-      info.name && setProfileInfo((old)=>{return [...old,info]});
-      addProfiles(info)
+      info.name && profileInfo.length<4 && setProfileInfo((old)=>{return [...old,info]});
+       profileInfo.length<4 && addProfiles(info)
     },[profileInfo]);
 
     const updateExistProfile = React.useCallback((info)=>{
@@ -75,11 +83,8 @@ const AuthContextProvider = ({ children }) => {
             setUser(null);
             setSelectedUser(null);
         }
-        axiosInstance.get("/movielist",{
-        }).then((response)=>{
-            console.log(response.data); setMovieList(response.data)}).catch((err)=>{
-            console.log(err)
-        })
+        
+        
     }, [])
 
 
@@ -100,14 +105,14 @@ const AuthContextProvider = ({ children }) => {
         await axiosInstance.post("/showManageProfile/add", {
             email: user.email, ...info
         }).then((response) => {
-            setMovieList(response.data);
+            setProfileInfo((old)=>[...old,response.data]);
         }).catch((error) => {
             console.log(error);
         });
     })
 
     return (
-        <AuthContext.Provider value={{ loadingProfiles, loginInfo, updateLoginInfo, sendLoginInfo, registerInfo, updateRegisterInfo, user, profileInfo, updateAddProfile, updateExistProfile, setProfileInfo, updateSelectedUser, selectedUser, setSelectedUser , setSelectedMovie, selectedMovie, movieList, setSelectedMovie}} >
+        <AuthContext.Provider value={{ loadingProfiles, loginInfo, updateLoginInfo, sendLoginInfo, registerInfo, updateRegisterInfo, user, profileInfo, updateAddProfile, updateExistProfile, setProfileInfo, updateSelectedUser, selectedUser, setSelectedUser , setSelectedMovie, selectedMovie, setSelectedMovie, updateMyList, myList, updateSearchMovie, searchMovie}} >
             {children}
         </AuthContext.Provider>
     );
