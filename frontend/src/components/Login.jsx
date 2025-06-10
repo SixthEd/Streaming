@@ -6,7 +6,7 @@ import { AuthContext } from "./AuthContext";
 
 function Login() {
     
-    const { loginInfo, updateLoginInfo, sendLoginInfo} = useContext(AuthContext);
+    const { loginInfo, updateLoginInfo, sendLoginInfo, loginErrorMessage} = useContext(AuthContext);
 
 
     const [toggle, setToggle] = useState(true);
@@ -28,7 +28,7 @@ function Login() {
 
                 <div id="second-page">
                     <div id="container">
-                        <div id="inside-container">
+                        <form onSubmit={(e)=>{e.preventDefault(); sendLoginInfo();}}id="inside-container">
                             <h1>Sign In</h1>
                             <input type="email" name="email" placeholder="Email" onChange={(event)=>{updateLoginInfo({...loginInfo, email:event.target.value})}} value={loginInfo.email} />
                             <div className="input-eye">
@@ -45,12 +45,16 @@ function Login() {
                                     )}
                                 </span>
                             </div>
-                            <button onClick={(event)=>{event.preventDefault(); sendLoginInfo()}}>Sign In</button>
+                            <button type="submit">Sign In</button>
+                            {loginErrorMessage &&
+                                <div className="errorMessage">
+                                    <p>{loginErrorMessage.message}</p>
+                                </div>}
                             <h3>
                                 New to Netflix?
                                 <a href="/signin">Sign up now.</a>
                             </h3>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

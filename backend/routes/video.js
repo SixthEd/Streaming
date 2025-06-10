@@ -63,7 +63,7 @@ streamroute.get("/movielist", async (req, res) => {
                         lang: "en",
                     },
                     headers: {
-                        'x-rapidapi-key': 'fa45c4f89dmshb167da71b5adcd2p10113fjsn12daf8c901a7',
+                        'x-rapidapi-key': '4fc1c49e69msh9c449d0c8daa789p1da12djsn7b6639de070e',
                         'x-rapidapi-host': 'netflix54.p.rapidapi.com'
                     }
                 })
@@ -140,7 +140,7 @@ streamroute.get("/similarTitles", async (req, res) => {
             lang: 'en'
         },
         headers: {
-            'x-rapidapi-key': 'fa45c4f89dmshb167da71b5adcd2p10113fjsn12daf8c901a7',
+            'x-rapidapi-key': '4fc1c49e69msh9c449d0c8daa789p1da12djsn7b6639de070e',
             'x-rapidapi-host': 'netflix54.p.rapidapi.com'
         }
 
@@ -181,7 +181,7 @@ streamroute.get("/genre", async (req, res) => {
             lang: "en",
         },
         headers: {
-            'x-rapidapi-key': 'fa45c4f89dmshb167da71b5adcd2p10113fjsn12daf8c901a7',
+            'x-rapidapi-key': '4fc1c49e69msh9c449d0c8daa789p1da12djsn7b6639de070e',
             'x-rapidapi-host': 'netflix54.p.rapidapi.com'
         }
 

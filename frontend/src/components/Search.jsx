@@ -91,7 +91,7 @@ function Search(props) {
         <div>
             <Navbar />
 
-            <div className="mylist-para"><p>{query?.toUpperCase()[0] + query?.slice(1, query.length)}</p></div>
+            <div className="mylist-para"><p>{query?query.toUpperCase()[0] + query.slice(1, query.length):""}</p></div>
             <div className="movies">
             </div>
             <div className="mylist-card">
@@ -100,8 +100,8 @@ function Search(props) {
                         <div className="card">
                             <div className="card-c">
                                 <div className="mylist-img-video">
-                                    <img src={show.jawSummary.logoImage.url} alt="" />
-                                    <video src="" poster={show.jawSummary.backgroundImage.url} alt="" > </video>
+                                    <img src={show.jawSummary.logoImage?.url} alt="" />
+                                    <video src="" poster={show.jawSummary.backgroundImage?.url} alt="" > </video>
                                 </div>
                                 <div className="card-content" >
                                     <div className="card-subContent">

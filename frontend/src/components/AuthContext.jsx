@@ -15,6 +15,9 @@ const AuthContextProvider = ({ children }) => {
     const [selectedUser, setSelectedUser] = React.useState(null);
     const [selectedMovie, setSelectedMovie] = React.useState({});
     const [searchMovie, setSearchMovie] = React.useState("");
+    const [registerErrorMessage, setRegisterErrorMessage] = React.useState("");
+    const [loginErrorMessage, setLoginErrorMessage] = React.useState("");
+
 
 
     const [loadingProfiles, setLoadingProfiles] = React.useState(true);
@@ -66,11 +69,27 @@ const AuthContextProvider = ({ children }) => {
             password: loginInfo.password
         }).then((response) => { setUser(response.data); localStorage.setItem("user", JSON.stringify(response.data)) }).catch((error) => {
             console.log(error);
+            setLoginErrorMessage(error.response.data)
         })
 
         getProfiles()
 
     }, [loginInfo, user]); // Add loginInfo and user as dependencies
+
+    const sendRegisterInfo = useCallback(() => {
+        console.log(registerInfo.email)
+        axiosInstance.post("/register", {
+            email: registerInfo.email,
+            name: registerInfo.name,
+            password: registerInfo.password,
+            confirmPassword: registerInfo.confirmPassword
+        }).then((response) => { setUser(response.data); localStorage.setItem("user", JSON.stringify(response.data)) }).catch((error) => {
+            console.log(error);
+            setRegisterErrorMessage(error.response.data)
+        })
+
+
+    }, [registerInfo, user]); 
 
     useEffect(() => {
 
@@ -112,7 +131,7 @@ const AuthContextProvider = ({ children }) => {
     })
 
     return (
-        <AuthContext.Provider value={{ loadingProfiles, loginInfo, updateLoginInfo, sendLoginInfo, registerInfo, updateRegisterInfo, user, profileInfo, updateAddProfile, updateExistProfile, setProfileInfo, updateSelectedUser, selectedUser, setSelectedUser , setSelectedMovie, selectedMovie, setSelectedMovie, updateMyList, myList, updateSearchMovie, searchMovie}} >
+        <AuthContext.Provider value={{registerErrorMessage, loginErrorMessage, sendRegisterInfo, loadingProfiles, loginInfo, updateLoginInfo, sendLoginInfo, registerInfo, updateRegisterInfo, user, profileInfo, updateAddProfile, updateExistProfile, setProfileInfo, updateSelectedUser, selectedUser, setSelectedUser , setSelectedMovie, selectedMovie, setSelectedMovie, updateMyList, myList, updateSearchMovie, searchMovie}} >
             {children}
         </AuthContext.Provider>
     );

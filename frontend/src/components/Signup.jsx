@@ -5,7 +5,7 @@ import { AuthContext } from "./AuthContext";
 
 function Signup() {
     const [toggle, setToggle] = useState(true);
-    const { registerInfo, updateRegisterInfo ,sendLoginInfo} = useContext(AuthContext);
+    const { registerInfo, updateRegisterInfo, sendRegisterInfo,registerErrorMessage } = useContext(AuthContext);
 
     const toggleEye = useCallback(() => {
         setToggle((prev) => !prev);
@@ -25,7 +25,7 @@ function Signup() {
 
                 <div id="second-page">
                     <div id="container">
-                        <div id="inside-container">
+                        <form onSubmit={(event)=>{event.preventDefault(); sendRegisterInfo(registerInfo)}}  id="inside-container">
                             <h1>Sign Up</h1>
                             <input type="email" placeholder="Email" onChange={(event) => { updateRegisterInfo({ ...registerInfo, email: event.target.value }) }} value={registerInfo.email} />
                             <input type="text" placeholder="Name" onChange={(event) => { updateRegisterInfo({ ...registerInfo, name: event.target.value }) }} value={registerInfo.name} />
@@ -42,8 +42,12 @@ function Signup() {
                                 </span>
                             </div>
 
-                            <button onClick={()=>{sendLoginInfo()}}>Sign Up</button>
-                        </div>
+                            <button type="submit">Sign Up</button>
+                            {registerErrorMessage &&
+                                <div className="errorMessage">
+                                    <p>{registerErrorMessage.message}</p>
+                                </div>}
+                        </form>
                     </div>
                 </div>
             </div>
