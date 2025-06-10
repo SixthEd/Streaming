@@ -1428,3 +1428,34 @@ input[type=range] {
   width: 30%;
   left: 5%;
 }
+
+.not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: white;
+  background-color: rgb(75, 74, 74);
+  gap: 10px;
+}
+
+.not-found p{
+  font-size: 2rem;
+}
+
+.circular-progress{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+}
+
+.tv-progress{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  gap:20px
+}

@@ -10,14 +10,16 @@ import ExpandCircleDownOutlinedIcon from '@mui/icons-material/ExpandCircleDownOu
 import SideInfo from "./SideInfo.jsx";
 import axiosInstance from "../utils.js";
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 function Cinema(props) {
-    const { setSelectedMovie, loadingProfiles, selectedUser, setSelectedUser , updateMyList} = useContext(AuthContext);
+    const { setSelectedMovie, loadingProfiles, selectedUser, setSelectedUser, updateMyList } = useContext(AuthContext);
     const [toggleSideinfo, setToggleSideInfo] = useState(false);
     const [cinemaList, setCinemaList] = useState(null);
     const [sideSelectedMovie, setSideSelectedMovie] = useState(null);
     const [showsLoading, setShowsLoading] = useState(true)
-    
+
 
 
     const updateToggleSideInfo = useCallback((info) => {
@@ -60,9 +62,9 @@ function Cinema(props) {
     useEffect(() => {
 
         axiosInstance
-            .get("/genre",{
-                params:{
-                    genre:"movies"
+            .get("/genre", {
+                params: {
+                    genre: "movies"
                 }
             })
             .then((response) => {
@@ -79,8 +81,7 @@ function Cinema(props) {
 
     return <div className="mylist">
         {toggleSideinfo && <SideInfo sideInfo={updateToggleSideInfo} movieInfo={sideSelectedMovie} />}
-        {loadingProfiles ?
-            <span className="loader"></span> :
+        
             <div>
                 <Navbar />
 
@@ -89,7 +90,7 @@ function Cinema(props) {
                 </div>
                 <div className="mylist-card">
                     <div className="mylist-cardls">
-                        {cinemaList ? cinemaList.map((show) => (<div className="card-wrapper">
+                        {cinemaList && !showsLoading ? cinemaList.map((show) => (<div className="card-wrapper">
                             <div className="card">
                                 <div className="card-c">
                                     <div className="mylist-img-video">
@@ -100,7 +101,7 @@ function Cinema(props) {
                                         <div className="card-subContent">
                                             <div>
                                                 <PlayCircleIcon sx={{ fontSize: 45, fill: "white" }} onClick={() => { streaming(show.summary.id) }} />
-                                                <AddCircleOutlineOutlinedIcon sx={{ fontSize: 45, fill: "white"  }} onClick={() => { updateMyList({ profileId: JSON.parse(localStorage.getItem("selectedUser")).profile_id, id: show.summary.id, logo: show.jawSummary.logoImage.url, year: show.jawSummary.releaseYear, title: show.jawSummary.title, maturityDescription: show.jawSummary.maturity.rating.maturityDescription, specificRatingReason: show.jawSummary.maturity.rating.specificRatingReason, tags: show.jawSummary.tags, poster: show.jawSummary.backgroundImage.url, image: show.jawSummary.logoImage.url, videoId: show.jawSummary.trackIds.videoId, cast: show.jawSummary.cast, genres: show.jawSummary.genres, rating: show.jawSummary.maturity.rating.value, context: show.jawSummary.contextualSynopsis.text }) }} />
+                                                <AddCircleOutlineOutlinedIcon sx={{ fontSize: 45, fill: "white" }} onClick={() => { updateMyList({ profileId: JSON.parse(localStorage.getItem("selectedUser")).profile_id, id: show.summary.id, logo: show.jawSummary.logoImage.url, year: show.jawSummary.releaseYear, title: show.jawSummary.title, maturityDescription: show.jawSummary.maturity.rating.maturityDescription, specificRatingReason: show.jawSummary.maturity.rating.specificRatingReason, tags: show.jawSummary.tags, poster: show.jawSummary.backgroundImage.url, image: show.jawSummary.logoImage.url, videoId: show.jawSummary.trackIds.videoId, cast: show.jawSummary.cast, genres: show.jawSummary.genres, rating: show.jawSummary.maturity.rating.value, context: show.jawSummary.contextualSynopsis.text }) }} />
 
                                             </div>
                                             <div>
@@ -114,12 +115,16 @@ function Cinema(props) {
                                     </div>
                                 </div>
                             </div>
-                        </div>)) : <div> hello</div>}
+                        </div>)) : <div className="tv-progress">
+                            <Box sx={{ display: 'flex' }}>
+                                <CircularProgress size={100} color="white" />
+                            </Box>
+                        </div>}
                         <div className="mylist-bottom"></div>
                     </div>
                 </div>
             </div>
-        }
+        
     </div>
 }
 

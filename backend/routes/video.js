@@ -3,44 +3,53 @@ import { db } from "../index.js";
 import fs from "fs";
 import { __dirname } from "../index.js";
 import axios from "axios"
+import { redisClient, DEFAULT_EXPIRATION } from "../index.js";
+import { error } from "console";
+
+
 const streamroute = express.Router();
 
 
 
-streamroute.get("/media", (req, res) => {
-    const range = req.headers.range;
-    if (!range) {
-        res.status(400).json({ message: "Required range headers" });
-    }
+// streamroute.get("/media", (req, res) => {
+//     const range = req.headers.range;
+//     if (!range) {
+//         res.status(400).json({ message: "Required range headers" });
+//     }
 
-    console.log(__dirname)
-    const videoPath = `${__dirname}/public/neon.mp4`;
-    const videoSize = fs.statSync(`${__dirname}/public/neon.mp4`).size;
+//     console.log(__dirname)
+//     const videoPath = `${__dirname}/public/neon.mp4`;
+//     const videoSize = fs.statSync(`${__dirname}/public/neon.mp4`).size;
 
-    const chunk = 10 ** 6 //1mb
-    console.log(range)
-    const start = Number(range.replace(/\D/g, ""));
-    const end = Math.min(start + chunk, videoSize - 1);
-    const contentLength = end - start + 1;
+//     const chunk = 10 ** 6 //1mb
+//     console.log(range)
+//     const start = Number(range.replace(/\D/g, ""));
+//     const end = Math.min(start + chunk, videoSize - 1);
+//     const contentLength = end - start + 1;
 
-    const headers = {
-        "Content-Range": `bytes ${start}-${end}/${videoSize}`,
-        "Accept-Range": "bytes",
-        "Content-Length": contentLength,
-        "Content-Type": "video/mp4"
-    };
-    res.writeHead(206, headers);
+//     const headers = {
+//         "Content-Range": `bytes ${start}-${end}/${videoSize}`,
+//         "Accept-Range": "bytes",
+//         "Content-Length": contentLength,
+//         "Content-Type": "video/mp4"
+//     };
+//     res.writeHead(206, headers);
 
-    const videoStream = fs.createReadStream(videoPath, { start, end });
-    videoStream.pipe(res);
-})
+//     const videoStream = fs.createReadStream(videoPath, { start, end });
+//     videoStream.pipe(res);
+// })
 
 
 
 streamroute.get("/movielist", async (req, res) => {
     const genres = ["Drama", "Sci-Fi", "Action", "Horror", "Romance"];
-
+    console.log("movieList")
     try {
+        const cached = await redisClient.get("genreList");
+        if (cached) {
+            return res.status(200).json(JSON.parse(cached));
+        }
+
         const results = await Promise.all(
             genres.map((genre) =>
                 axios.request({
@@ -54,26 +63,32 @@ streamroute.get("/movielist", async (req, res) => {
                         lang: "en",
                     },
                     headers: {
-                        'x-rapidapi-key': '9292f8f6f7msh9cbe946808b5240p141320jsnb39b19a7d89d',
+                        'x-rapidapi-key': 'fa45c4f89dmshb167da71b5adcd2p10113fjsn12daf8c901a7',
                         'x-rapidapi-host': 'netflix54.p.rapidapi.com'
                     }
                 })
             )
         );
 
-        // Merge or process results
         const combinedResults = genres.map((genre, index) => ({
             genre,
             data: results[index].data
         }));
+
         const randomNumber = Math.floor(Math.random() * combinedResults.length);
-        const randomTitle = Math.floor(Math.random() * combinedResults[randomNumber].data.titles.length)
-        const randomMovie = combinedResults[randomNumber].data.titles[randomTitle].jawSummary
-        res.status(200).json({ combinedResults, randomMovie }); // ✅ send only one response
+        const randomTitle = Math.floor(Math.random() * combinedResults[randomNumber].data.titles.length);
+        const randomMovie = combinedResults[randomNumber].data.titles[randomTitle].jawSummary;
+
+        await redisClient.setEx("genreList", 3600, JSON.stringify({ combinedResults, randomMovie }));
+
+        return res.status(200).json({ combinedResults, randomMovie });
+
     } catch (error) {
-        console.error("Error fetching movie list:", error);
-        res.status(500).json({ error: "Failed to fetch movie list" }); // ✅ send only one error response
+        console.error("Error in /movielist:", error);
+        return res.status(500).json({ error: "Server error" });
     }
+
+
 })
 
 streamroute.get("/movieTrailer", (req, res) => {
@@ -86,7 +101,7 @@ streamroute.get("/movieTrailer", (req, res) => {
             contentId: info
         },
         headers: {
-            'x-rapidapi-key': '9292f8f6f7msh9cbe946808b5240p141320jsnb39b19a7d89d',
+            'x-rapidapi-key': 'fa45c4f89dmshb167da71b5adcd2p10113fjsn12daf8c901a7',
             'x-rapidapi-host': 'netflix133.p.rapidapi.com'
         }
 
@@ -106,9 +121,14 @@ streamroute.get("/movieTrailer", (req, res) => {
     // res.json(req.query.info)
 })
 
-streamroute.get("/similarTitles", (req, res) => {
+streamroute.get("/similarTitles", async (req, res) => {
     const info = req.query.info;
     console.log(info)
+
+    // const cached = await redisClient.get("similarTitles");
+    // if (cached) {
+    //     return res.status(200).json(JSON.parse(cached))
+    // }
 
     const options = {
         method: 'GET',
@@ -120,17 +140,16 @@ streamroute.get("/similarTitles", (req, res) => {
             lang: 'en'
         },
         headers: {
-            'x-rapidapi-key': '9292f8f6f7msh9cbe946808b5240p141320jsnb39b19a7d89d',
+            'x-rapidapi-key': 'fa45c4f89dmshb167da71b5adcd2p10113fjsn12daf8c901a7',
             'x-rapidapi-host': 'netflix54.p.rapidapi.com'
         }
-
-
 
     };
 
     async function fetchData() {
         try {
             const response = await axios.request(options);
+            // redisClient.setEx("similarTitles", DEFAULT_EXPIRATION, JSON.stringify(response.data))
             res.status(200).json(response.data);
 
         } catch (error) {
@@ -142,9 +161,15 @@ streamroute.get("/similarTitles", (req, res) => {
 })
 
 
-streamroute.get("/genre", (req, res) => {
+streamroute.get("/genre", async (req, res) => {
     const genre = req.query.genre;
     console.log(genre);
+
+    const cached = await redisClient.get(genre)
+    if (cached) {
+        return res.status(200).json(JSON.parse(cached))
+    }
+
     const options = {
         method: "GET",
         url: "https://netflix54.p.rapidapi.com/search/",
@@ -156,15 +181,28 @@ streamroute.get("/genre", (req, res) => {
             lang: "en",
         },
         headers: {
-            'x-rapidapi-key': '9292f8f6f7msh9cbe946808b5240p141320jsnb39b19a7d89d',
+            'x-rapidapi-key': 'fa45c4f89dmshb167da71b5adcd2p10113fjsn12daf8c901a7',
             'x-rapidapi-host': 'netflix54.p.rapidapi.com'
         }
 
     };
 
     async function fetchData() {
+
+
         try {
+
             const response = await axios.request(options);
+            if (genre === "anime") {
+                redisClient.setEx(genre, DEFAULT_EXPIRATION, JSON.stringify(response.data))
+            }
+            else if (genre === "movies") {
+                redisClient.setEx(genre, DEFAULT_EXPIRATION, JSON.stringify(response.data))
+
+            }
+            else if (genre === "Tv shows") {
+                redisClient.setEx(genre, DEFAULT_EXPIRATION, JSON.stringify(response.data))
+            }
             res.status(200).json(response.data);
 
         } catch (error) {

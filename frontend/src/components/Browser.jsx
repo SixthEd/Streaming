@@ -7,6 +7,8 @@ import axiosInstance from "../utils";
 import SideInfo from "./SideInfo";
 import { AuthContext } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 function Browser() {
 
@@ -15,6 +17,8 @@ function Browser() {
    const [sideSelectedMovie, setSideSelectedMovie] = useState(null);
    const [movieList, setMovieList] = React.useState(null);
    // const [randomMovie, setRandomMovie] = React.useState(null);
+   const [loadingScreen, setLoadingScreen] = useState(true);
+
    const navigate = useNavigate();
 
    const updateToggleSideInfo = useCallback((info) => {
@@ -39,6 +43,7 @@ function Browser() {
       }).catch((err) => {
          console.log(err)
       })
+      setLoadingScreen(false)
    }, [])
 
 
@@ -72,7 +77,7 @@ function Browser() {
       <Navbar />
 
 
-      <div className="top-screen">
+      {!loadingScreen && movieList ? <div className="top-screen">
          <div className="top-container">
             <div className="video-browser-button">
                <div className="top-screen-img-video">
@@ -108,7 +113,11 @@ function Browser() {
 
             </div>
          </div>
-      </div>
+      </div> : <div className="tv-progress">
+         <Box sx={{ display: 'flex' }}>
+            <CircularProgress size={100} color="white" />
+         </Box>
+      </div>}
 
 
 

@@ -9,6 +9,7 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
 import { useNavigate } from "react-router-dom";
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 
 function Video(props) {
@@ -154,11 +155,12 @@ function Video(props) {
 
 
     return <div className="streaming" ref={containerRef}>
-        <div className={showControllers ? "streaming-back" : ""} onClick={() => { navigateTo() }} >
-            <div><ArrowBackSharpIcon sx={{ fontSize: 60, fill: "white" }} /></div>
-        </div>
+        {selectedMovie?.videoData?.[1]?.videoUrl ? (<div>
+            <div className={showControllers ? "streaming-back" : ""} onClick={() => { navigateTo() }} >
+                <div><ArrowBackSharpIcon sx={{ fontSize: 60, fill: "white" }} /></div>
+            </div>
 
-        {selectedMovie?.videoData?.[1]?.videoUrl && (
+
             <video
                 src={selectedMovie.videoData[1].videoUrl}
                 ref={videoRef}
@@ -166,45 +168,49 @@ function Video(props) {
                 autoPlay
                 controls={false}
             />
-        )}
 
-        <div className={showControllers ? "controllers" : ""}>
-            <div className="video-progress">
-                <input
 
-                    type='range'
-                    min='0'
-                    max='100'
-                    value={progress}
-                    onChange={handleProgress}
-                />
-                <div>{remainingTime}</div>
-            </div>
-            <div className="video-controlls">
-                <div className="controller-buttons">
-                    <div className="controller-play">
-                        <PlayArrowIcon sx={{ fontSize: 60, fill: "white" }} onClick={() => { togglePlayPause() }} />
-                    </div>
-                    <div className="controller-reverse">
-                        <Replay10SharpIcon sx={{ fontSize: 60, fill: "white" }} onClick={() => { reversehandleProgress() }} />
-                    </div>
-                    <div className="controller-forward">
-                        <Forward10SharpIcon sx={{ fontSize: 60, fill: "white" }} onClick={() => { forwardhandleProgress() }} />
-                    </div>
-                    <div className="volume-full-controller">
-                        <div className="controller-volume">{isMute ? <VolumeOffIcon sx={{ fontSize: 60, fill: "white" }} onClick={() => { toggleMute() }} /> : <VolumeUpIcon sx={{ fontSize: 60, fill: "white" }} onClick={() => { toggleMute() }} />}</div>
-                        <div className="volume-range">
-                            <input type="range" min='0' max='1' step="0.05" value={volume} onChange={handleVolume}></input>
+            <div className={showControllers ? "controllers" : ""}>
+                <div className="video-progress">
+                    <input
+
+                        type='range'
+                        min='0'
+                        max='100'
+                        value={progress}
+                        onChange={handleProgress}
+                    />
+                    <div>{remainingTime}</div>
+                </div>
+                <div className="video-controlls">
+                    <div className="controller-buttons">
+                        <div className="controller-play">
+                            <PlayArrowIcon sx={{ fontSize: 60, fill: "white" }} onClick={() => { togglePlayPause() }} />
+                        </div>
+                        <div className="controller-reverse">
+                            <Replay10SharpIcon sx={{ fontSize: 60, fill: "white" }} onClick={() => { reversehandleProgress() }} />
+                        </div>
+                        <div className="controller-forward">
+                            <Forward10SharpIcon sx={{ fontSize: 60, fill: "white" }} onClick={() => { forwardhandleProgress() }} />
+                        </div>
+                        <div className="volume-full-controller">
+                            <div className="controller-volume">{isMute ? <VolumeOffIcon sx={{ fontSize: 60, fill: "white" }} onClick={() => { toggleMute() }} /> : <VolumeUpIcon sx={{ fontSize: 60, fill: "white" }} onClick={() => { toggleMute() }} />}</div>
+                            <div className="volume-range">
+                                <input type="range" min='0' max='1' step="0.05" value={volume} onChange={handleVolume}></input>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div>
-                    {selectedMovie?.title && (<p>{selectedMovie.title}</p>)}</div>
-                <div>
-                    {!isFullScreen ? <FullscreenIcon sx={{ fontSize: 60, fill: "white" }} onClick={() => { if (containerRef.current.requestFullscreen) { containerRef.current.requestFullscreen(); setIsFullScreen(true) } }} /> : <FullscreenExitIcon sx={{ fontSize: 60, fill: "white" }} onClick={() => { if (document.fullscreenElement) { document.exitFullscreen(); setIsFullScreen(false) } }} />}
+                    <div>
+                        {selectedMovie?.title && (<p>{selectedMovie.title}</p>)}</div>
+                    <div>
+                        {!isFullScreen ? <FullscreenIcon sx={{ fontSize: 60, fill: "white" }} onClick={() => { if (containerRef.current.requestFullscreen) { containerRef.current.requestFullscreen(); setIsFullScreen(true) } }} /> : <FullscreenExitIcon sx={{ fontSize: 60, fill: "white" }} onClick={() => { if (document.fullscreenElement) { document.exitFullscreen(); setIsFullScreen(false) } }} />}
+                    </div>
                 </div>
             </div>
-        </div>
+        </div>) :
+            <div className="not-found">
+                <ErrorOutlineIcon sx={{fontSize:"150px"}}/><p>Video not Found</p>
+            </div>}
     </div>
 }
 
