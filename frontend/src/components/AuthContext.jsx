@@ -23,33 +23,33 @@ const AuthContextProvider = ({ children }) => {
     const [loadingProfiles, setLoadingProfiles] = React.useState(true);
     const [myList, setMyList] = React.useState([]);
 
-    const updateSearchMovie = React.useCallback((info)=>{
+    const updateSearchMovie = React.useCallback((info) => {
         setSearchMovie(info)
-    },[])
+    }, [])
 
-    const updateSelectedUser = React.useCallback((info)=>{
+    const updateSelectedUser = React.useCallback((info) => {
         console.log(profileInfo)
         console.log(info)
         setSelectedUser(info);
-        localStorage.setItem("selectedUser", JSON.stringify(info)) 
-    },[profileInfo])
+        localStorage.setItem("selectedUser", JSON.stringify(info))
+    }, [profileInfo])
 
 
-    const updateMyList = useCallback(async(info)=>{
-        setMyList((old)=>[...old,info]);
-        axiosInstance.post("/addmovie",info).then((response)=>{console.log(response.data)}).catch((err)=>{console.log(err)});
-    },[])
+    const updateMyList = useCallback(async (info) => {
+        setMyList((old) => [...old, info]);
+        axiosInstance.post("/addmovie", info).then((response) => { console.log(response.data) }).catch((err) => { console.log(err) });
+    }, [])
 
 
-    const updateAddProfile = React.useCallback((info)=>{
+    const updateAddProfile = React.useCallback((info) => {
         info.profile_id = uuidv4();
         console.log(info);
-      info.name && profileInfo.length<4 && setProfileInfo((old)=>{return [...old,info]});
-       profileInfo.length<4 && addProfiles(info)
-    },[profileInfo]);
+        info.name && profileInfo?.length < 4 && setProfileInfo((old) => { return [...old, info] });
+        profileInfo.length < 4 && addProfiles(info)
+    }, [profileInfo]);
 
-    const updateExistProfile = React.useCallback((info)=>{
-        axiosInstance.put("/showManageProfile/update",info).then((response)=>{console.log(response.data)}).catch((error)=>{
+    const updateExistProfile = React.useCallback((info) => {
+        axiosInstance.put("/showManageProfile/update", info).then((response) => { console.log(response.data) }).catch((error) => {
             console.log(error);
         })
     })
@@ -63,16 +63,18 @@ const AuthContextProvider = ({ children }) => {
     }, []);
 
 
-    const sendLoginInfo = useCallback(() => {
-        axiosInstance.post("/login", {
+    const sendLoginInfo = useCallback(async () => {
+        await axiosInstance.post("/login", {
             email: loginInfo.email,
             password: loginInfo.password
-        }).then((response) => { setUser(response.data); localStorage.setItem("user", JSON.stringify(response.data)) }).catch((error) => {
+        }).then((response) => {
+            setUser(response.data); localStorage.setItem("user", JSON.stringify(response.data));
+            getProfiles()
+        }).catch((error) => {
             console.log(error);
             setLoginErrorMessage(error.response.data)
         })
 
-        getProfiles()
 
     }, [loginInfo, user]); // Add loginInfo and user as dependencies
 
@@ -89,7 +91,7 @@ const AuthContextProvider = ({ children }) => {
         })
 
 
-    }, [registerInfo, user]); 
+    }, [registerInfo, user]);
 
     useEffect(() => {
 
@@ -97,20 +99,20 @@ const AuthContextProvider = ({ children }) => {
             setUser(JSON.parse(localStorage.getItem("user")));
             getProfiles()
         }
-        else
-        {
+        else {
             setUser(null);
             setSelectedUser(null);
         }
-        
-        
+
+
     }, [])
 
 
-    const getProfiles = async() => {
+    const getProfiles = async () => {
         setLoadingProfiles(true)
+        const email = JSON.parse(localStorage.getItem("user")).email;
         await axiosInstance.get("/showManageProfile", {
-            params: { email: "pragyan@gmail.com" }
+            params: { email }
         }).then((response) => {
             setProfileInfo(response.data);
             console.log(response.data);
@@ -120,18 +122,18 @@ const AuthContextProvider = ({ children }) => {
         });
     }
 
-    const addProfiles = useCallback(async(info) => {
+    const addProfiles = useCallback(async (info) => {
         await axiosInstance.post("/showManageProfile/add", {
             email: user.email, ...info
         }).then((response) => {
-            setProfileInfo((old)=>[...old,response.data]);
+            // setProfileInfo((old)=>[...old,response.data]);
         }).catch((error) => {
             console.log(error);
         });
     })
 
     return (
-        <AuthContext.Provider value={{registerErrorMessage, loginErrorMessage, sendRegisterInfo, loadingProfiles, loginInfo, updateLoginInfo, sendLoginInfo, registerInfo, updateRegisterInfo, user, profileInfo, updateAddProfile, updateExistProfile, setProfileInfo, updateSelectedUser, selectedUser, setSelectedUser , setSelectedMovie, selectedMovie, setSelectedMovie, updateMyList, myList, updateSearchMovie, searchMovie}} >
+        <AuthContext.Provider value={{ registerErrorMessage, loginErrorMessage, sendRegisterInfo, loadingProfiles, loginInfo, updateLoginInfo, sendLoginInfo, registerInfo, updateRegisterInfo, user, profileInfo, updateAddProfile, updateExistProfile, setProfileInfo, updateSelectedUser, selectedUser, setSelectedUser, setSelectedMovie, selectedMovie, setSelectedMovie, updateMyList, myList, updateSearchMovie, searchMovie }} >
             {children}
         </AuthContext.Provider>
     );

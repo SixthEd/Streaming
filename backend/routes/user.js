@@ -12,7 +12,7 @@ const saltRound = 10;
 //register
 router.post("/register", async (req,res)=>{
     const {name , email , password , confirmPassword} = req.body;
-    console.log(name , email , password , confirmPassword );
+    // console.log(name , email , password , confirmPassword );
     const response = await db.query("Select * from accounts where email=$1",[email]);
     if(response.rows.length>0)
     {
@@ -49,7 +49,7 @@ router.post("/register", async (req,res)=>{
                 await db.query("Insert into accounts (user_name, email ,password_hash) values($1,$2,$3)",[name,email,hash]);
                 const response = await db.query("select account_id from accounts where email=$1",[email]);
                 const id=  response.rows[0].id;
-                return res.status(200).json(id,name,email);
+                return res.status(200).json({id,name,email});
             }
         })
 
