@@ -10,7 +10,7 @@ const AuthContext = createContext();
 const AuthContextProvider = ({ children }) => {
     const [loginInfo, setLoginInfo] = React.useState({ email: "", password: "" });
     const [registerInfo, setRegisterInfo] = React.useState({ email: "", name: "", password: "", confirmPassword: "" });
-    const [profileInfo, setProfileInfo] = React.useState(null);
+    const [profileInfo, setProfileInfo] = React.useState([]);
     const [user, setUser] = React.useState(null);
     const [selectedUser, setSelectedUser] = React.useState(null);
     const [selectedMovie, setSelectedMovie] = React.useState({});
@@ -23,7 +23,6 @@ const AuthContextProvider = ({ children }) => {
     const [loadingProfiles, setLoadingProfiles] = React.useState(true);
     const [myList, setMyList] = React.useState([]);
 
-<<<<<<< HEAD
     const updateSearchMovie = React.useCallback((info) => {
         setSearchMovie(info)
     }, [])
@@ -46,7 +45,7 @@ const AuthContextProvider = ({ children }) => {
         info.profile_id = uuidv4();
         console.log(info);
         info.name && profileInfo?.length < 4 && setProfileInfo((old) => { return [...old, info] });
-        profileInfo.length < 4 && addProfiles(info)
+        profileInfo?.length < 4 && addProfiles(info)
     }, [profileInfo]);
 
     const updateExistProfile = React.useCallback((info) => {
@@ -98,7 +97,6 @@ const AuthContextProvider = ({ children }) => {
             setUser(JSON.parse(localStorage.getItem("user")));
             getProfiles()
         }
-<<<<<<< HEAD
         else {
             setUser(null);
             setSelectedUser(null);
@@ -123,8 +121,18 @@ const AuthContextProvider = ({ children }) => {
     }
 
     const addProfiles = useCallback(async(info) => {
-        await axiosInstance.post("/showManageProfile/add", {
-            email: user.email, ...info
+        let email;
+        if(user===null)
+        {
+            email= JSON.parse(localStorage.getItem("user")).email;
+        }
+        else
+        {
+            email =user.email;
+        }
+
+	await axiosInstance.post("/showManageProfile/add", {
+            email, name: info.name, avatar_url: info.avatar_url, is_kid: info.is_kid, profile_id: info.profile_id
         }).then((response) => {
            // setProfileInfo((old)=>[...old,response.data]);
 	      return;
@@ -134,7 +142,6 @@ const AuthContextProvider = ({ children }) => {
     })
 
     return (
-<<<<<<< HEAD
         <AuthContext.Provider value={{ registerErrorMessage, loginErrorMessage, sendRegisterInfo, loadingProfiles, loginInfo, updateLoginInfo, sendLoginInfo, registerInfo, updateRegisterInfo, user, profileInfo, updateAddProfile, updateExistProfile, setProfileInfo, updateSelectedUser, selectedUser, setSelectedUser, setSelectedMovie, selectedMovie, setSelectedMovie, updateMyList, myList, updateSearchMovie, searchMovie }} >
             {children}
         </AuthContext.Provider>

@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 function Managewindow() {
 
-<<<<<<< HEAD
     const { profileInfo, updateAddProfile, updateExistProfile, setProfileInfo } = React.useContext(AuthContext);
     const [isProfile, setIsProfile] = useState(0);
     const [selectedProfile, setSelectedProfile] = useState({ profile_id: "", name: "", avatar_url: "blueProfile.jpg", is_kid: false });
@@ -25,7 +24,6 @@ function Managewindow() {
         setIsProfile(2)
     }, [])
 
-<<<<<<< HEAD
     const sendAddProfile = () => {
         if (addProfile.name) {
             updateAddProfile(addProfile);
