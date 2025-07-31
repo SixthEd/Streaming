@@ -23,6 +23,7 @@ const AuthContextProvider = ({ children }) => {
     const [loadingProfiles, setLoadingProfiles] = React.useState(true);
     const [myList, setMyList] = React.useState([]);
 
+<<<<<<< HEAD
     const updateSearchMovie = React.useCallback((info) => {
         setSearchMovie(info)
     }, [])
@@ -75,7 +76,6 @@ const AuthContextProvider = ({ children }) => {
             setLoginErrorMessage(error.response.data)
         })
 
-
     }, [loginInfo, user]); // Add loginInfo and user as dependencies
 
     const sendRegisterInfo = useCallback(() => {
@@ -90,8 +90,7 @@ const AuthContextProvider = ({ children }) => {
             setRegisterErrorMessage(error.response.data)
         })
 
-
-    }, [registerInfo, user]);
+    }, [registerInfo, user]); 
 
     useEffect(() => {
 
@@ -99,6 +98,7 @@ const AuthContextProvider = ({ children }) => {
             setUser(JSON.parse(localStorage.getItem("user")));
             getProfiles()
         }
+<<<<<<< HEAD
         else {
             setUser(null);
             setSelectedUser(null);
@@ -122,17 +122,19 @@ const AuthContextProvider = ({ children }) => {
         });
     }
 
-    const addProfiles = useCallback(async (info) => {
+    const addProfiles = useCallback(async(info) => {
         await axiosInstance.post("/showManageProfile/add", {
             email: user.email, ...info
         }).then((response) => {
-            // setProfileInfo((old)=>[...old,response.data]);
+           // setProfileInfo((old)=>[...old,response.data]);
+	      return;
         }).catch((error) => {
             console.log(error);
         });
     })
 
     return (
+<<<<<<< HEAD
         <AuthContext.Provider value={{ registerErrorMessage, loginErrorMessage, sendRegisterInfo, loadingProfiles, loginInfo, updateLoginInfo, sendLoginInfo, registerInfo, updateRegisterInfo, user, profileInfo, updateAddProfile, updateExistProfile, setProfileInfo, updateSelectedUser, selectedUser, setSelectedUser, setSelectedMovie, selectedMovie, setSelectedMovie, updateMyList, myList, updateSearchMovie, searchMovie }} >
             {children}
         </AuthContext.Provider>

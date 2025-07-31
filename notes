@@ -1,0 +1,22 @@
+Biuild frontend
+
+
+npm run build
+
+This builds react files
+
+Send these static files to npm express static so index.html is served from node server
+
+CORS changes, should not need any headers now (hopefully) test this out
+
+
+In fronend change axios localhost to instance IP with some env var - first issue
+
+After, all other issues were related to CORS
+
+
+TODO:
+
+Use docker-compose to run both as one file. Build react first, don't run react server and node server, only run node server.
+
+Figure out a way to run docker compose using systemd service so we have automatic restarts.
