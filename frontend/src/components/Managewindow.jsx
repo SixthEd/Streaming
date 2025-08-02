@@ -48,7 +48,7 @@ function Managewindow() {
                     <p className="profile-container-p">Manage Profiles:</p>
                     <div className="profiles">
                         {profileInfo && profileInfo.map((profile) => <Profile key={profile.profile_id} profile_id={profile.profile_id} name={profile.name} avatar_url={profile.avatar_url} selectProfile={updateSelectedProfile} />)}
-                        {addProfile.name ? <Profile name={addProfile.name} /> :
+                        {addProfile.name ? <Profile name={addProfile.name} /> : profileInfo.length<4 &&
                             <div className="addProfile">
                                 <AddCircleIcon sx={{ fontSize: 160 }} className="addIcon" onClick={() => { updateIsProfile(1) }} />
                                 <div>Add Profile</div>
